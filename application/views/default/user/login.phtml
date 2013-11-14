@@ -1,0 +1,84 @@
+<script type="text/javascript">
+    var imgPath = '<?php echo $this->baseUrl('images/');?>';
+    jQuery(document).ready(function() {
+        openid.img_path = imgPath;
+        openid.init('openid_identifier');
+        openid.setDemoMode(false); //Stops form submission for client javascript-only test purposes
+    });
+</script>
+
+<div id="content">
+	<div class="one">
+		<!-- COLUMNS CONTAINER STARTS-->
+		<div class="intro-pages">
+			<!-- INTRO DIV STARTS-->
+			<h3>Welcome to <span class="colored">Adventure</span>, Clean &amp; Simple <span class="colored">HTML5 </span> template.Feel free to browse through all the pages and see what's &quot;Adventure&quot; capable to do for You.Enjoy! </h3>
+		</div>
+		<!-- INTRO ENDS-->
+	</div>
+<!-- COLUMNS CONTAINER ENDS-->
+<div class="one">
+	<div class="one-fourth">
+		<?php echo $this->partial('partials/pages.phtml'); ?>
+	</div>
+	<div class="inner-content last">
+
+		<div id="user_register" class="one-third login_register">
+			<h4>Register a new account</h4><br/>
+			<form action="/auth/register" id="register_form" method="post">
+				<input type="hidden" name="redir" value="/">
+				<fieldset>
+					<label>Email <span class="required">*</span></label>
+					<input type="text" name="username" id="register_username" value="" class="text requiredField email"/>
+				</fieldset>
+				<fieldset>
+					<label>Password<span class="required">*</span></label>
+					<input type="password" name="password" id="password" value="" class="text requiredField subject"/>
+				</fieldset>
+				<fieldset>
+					<label>Password (Again)<span class="required">*</span></label>
+					<input type="password" name="password2" id="password2" value="" class="text requiredField subject"/>
+				</fieldset>
+				<br>
+				<fieldset>
+					<input name="user_register_submit" value="Register Now" class="button small green" type="submit"/>
+				</fieldset>
+			</form>
+		</div>
+
+		<div id="user_login" class="one-third hide login_register">
+			<h4>Log-in to your account</h4><br/>
+			<form action="/auth/login" id="login_form" method="post">
+				<input type="hidden" name="redir" value="/">
+				<fieldset>
+					<label>Email <span class="required">*</span></label>
+					<input type="text" name="username" id="login_username" value="" class="text requiredField email"/>
+				</fieldset>
+				<fieldset>
+					<label>Password<span class="required">*</span></label>
+					<input type="password" name="password" id="login_password" value="" class="text requiredField subject"/>
+				</fieldset>
+				<br>
+				<fieldset>
+					<input name="user_login_submit" value="Login to your account" class="button small orange" type="submit"/>
+				</fieldset>
+			</form>
+		</div>
+
+		<div class="one-third-big last">
+		<h4>Already Have an Account?</h4><br/>
+		<p>
+			<a href="#" id="user_login_show" class="login_register_show button big round green">Sign In &amp; Explore!</a>
+			<a href="#" id="user_register_show" class="login_register_show hide button big round orange">Register a new account!</a>
+		</p><br/>
+
+		<h4> -- or -- </h4><br/>
+		<form action="<?php echo $this->baseUrl('/auth/login-oauth');?>" method="get" id="openid_form">
+			<p><a href="javascript:openid.signin('facebook');"><img src="/images/login/facebook.png"></a></p>
+			<p><a href="javascript:openid.signin('twitter');"><img src="/images/login/twitter.png"></a></p><br/>
+		</form>
+
+		</div>
+		<div class="horizontal-line"></div>
+	</div>
+</div>

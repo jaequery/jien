@@ -1,0 +1,57 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <title><?php if ($this->title!='') { echo $this->title; } ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!--[if lt IE 9]>
+    <script src="/themes/bootphp/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="/themes/admin/css/bootstrap.css">
+    <link rel="stylesheet" href="/js/plugins/toastmessage/css/jquery.toastmessage.css">
+    <link rel="stylesheet" href="/themes/admin/css/datatables.css">
+    <link rel="stylesheet" href="/themes/admin/css/jquery.treeview.css" >
+    <link rel="stylesheet" href="/js/plugins/select2/select2.css">
+    <link rel="stylesheet" href="/themes/admin/css/admin.css">
+
+    <script src="/themes/admin/js/jquery.min.js"></script>
+    <script src="/js/plugins/ui/jquery-ui.min.js"></script>
+    <script src="/themes/admin/js/jquery.cookie.js"></script>
+    <script src="/themes/admin/js/jquery.treeview.js"></script>
+    <script src="/js/ckeditor/ckeditor.js"></script>
+    <script src="/js/ckeditor/adapters/jquery.js"></script>
+    <script src="/js/jien.js"></script>
+    <script src="/js/plugins/select2/select2.js"></script>
+    <script src="/js/plugins/toastmessage/jquery.toastmessage.js"></script>
+    <script src="/themes/admin/js/bootstrap.js"></script>
+    <script src="/themes/admin/js/admin.php"></script>
+    <script src="/themes/admin/js/jquery.dataTables.js"></script>
+    <script src="/themes/admin/js/datatables-bootstrap.js"></script>
+    <script src="/themes/admin/js/main.js"></script>
+
+</head>
+
+<body>
+
+<div id="wrap">
+
+    <div id="main" class="container">
+
+        <?php echo $this->layout()->content; ?>
+
+    </div><!--#main.container-->
+
+</div><!--#wrap-->
+
+<div id="footer">
+    <div class="container">
+        <p class="text-muted credit">&copy; 2013 ProcCRM. All rights reserved.</p>
+    </div>
+</div>
+
+</body>
+</html>

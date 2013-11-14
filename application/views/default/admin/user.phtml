@@ -1,0 +1,248 @@
+<div class="row" id="content">
+    <form class="main-form form-horizontal col-lg-12 trig_form">
+        <input type="hidden" name="model" value="<?php echo $this->model; ?>">
+        <input type="hidden" name="id" value="<?php echo $this->params('id'); ?>">        
+        <input type="hidden" id="auth_secret" name="auth_secret" value="">
+
+        <div class="row">
+            <div class="col-lg-12">
+                <div id="title-bar" class="page-header">
+                    <div class="col-lg-6">
+                        <h1 class="page-title">Edit User</h1>
+                    </div>
+                    <div id="header-btns">
+                        <div class="inner">
+                            <button class="btn btn-default trig_go" rel="/admin/users"><span class="icon-arrow-left"></span> View List</button>
+                            <button type="submit" class="btn btn-default trig_save"><span class="icon-save"></span> Save</button>
+                            <?php if($this->params('id') != ''){ ?>
+                            <button rel="model=<?php echo $this->model; ?>|id=<?php echo $this->params('id'); ?>" class="btn btn-default trig_delete"><span class="icon-trash"></span> Delete</button>
+                            <?php } ?>
+                        </div><!--.inner-->
+                    </div><!--#header-btns.col-lg-4-->
+                </div><!--#title-bar-->
+            </div><!--.col-lg-12-->
+        </div><!--.row-->
+        
+        <ul class="nav nav-tabs">
+            <li class="active"><a href="#tab-account" data-toggle="tab">Account</a></li>
+            <li><a href="#tab-profile" data-toggle="tab">Profile</a></li>
+        </ul>
+
+        <div class="tab-content">
+
+            <div class="tab-pane active" id="tab-account">
+                
+                <div class="col-lg-5 col-lg-offset-1">
+                    <div class="form-group">
+                        <label for="account_id" class="col-lg-4 control-label">ID</label>
+                        <div class="col-lg-8">
+                            <div class="data-display id-display"><?php echo $this->data->row('user_id'); ?></div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="username" class="col-lg-4 control-label">Username<span class="req">*</span></label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="username" size="30" type="text" value="<?php echo $this->data->row('username'); ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email" class="col-lg-4 control-label">Email<span class="req">*</span></label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="email" size="30" type="text" value="<?php echo $this->data->row('email'); ?>">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password" class="col-lg-4 control-label">Password<span class="req">*</span></label>
+                        <div class="col-lg-8">
+                            <a href="#" class="btn btn-default trig_password" rel="password">Set Password</a>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender" class="col-lg-4 control-label">Role</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" name="role_id">
+                                <?php echo $this->dropdown('role_id', 'role', $this->roles->rows(), $this->data->row('role_id')); ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="gender" class="col-lg-4 control-label">Two-Factor Auth?</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" name="authenticator" id="authenticator">
+                                <option value="0"<?php echo $this->authenticator->row('active') ? '' : ' selected';?>>No</option>
+                                <option value="1"<?php echo $this->authenticator->row('active') ? ' selected' : '';?>>Yes</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group authenticator" style="display: none;">
+                        <label for="authenticator_qr" class="col-lg-4 control-label"></label>
+                        <div class="col-lg-8 qr_img">
+                            <p>Scan using Google Authenticator mobile app</p>
+                            <p>Click 'Update' when done!</p>
+                            <img height="200" width="200" id="auth_qr_img">
+                        </div>
+                    </div>
+                    <div class="form-group authenticator"<?php echo $this->authenticator->row('active') ? '' : ' style="display: none;"';?>>
+                        <label for="authenticator_qr" class="col-lg-4 control-label">Auth Recovery SMS</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="auth_sms" size="30" type="text" value="<?php echo $this->authenticator->row('authenticator_sms'); ?>">
+                        </div>
+                    </div>
+                </div><!--.col-lg-4-->
+
+                <div class="col-lg-3 col-lg-offset-1 ">
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Created</label>
+                        <div class="col-lg-8">
+                            <p class="control-value"><?php echo $this->user['created']; ?></p>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-4 control-label">Last login</label>
+                        <div class="col-lg-8">
+                            <p class="control-value"><?php echo $this->user['accessed']; ?></p>
+                        </div>
+                    </div>
+
+                </div><!--.col-lg-4-->
+
+            </div><!--#tab-account-->
+
+            <div class="tab-pane" id="tab-profile">
+
+                <div class="col-lg-5">
+
+                    <div class="form-group">
+                        <label for="gender" class="col-lg-4 control-label">Gender</label>
+                        <div class="col-lg-8">
+                            <select class="form-control" name="gender">
+                                <option value="male"<?php if ($this->data->row('gender') == 'male') { echo ' selected'; } ?>>Male</option>
+                                <option value="female"<?php if ($this->data->row('gender') == 'female') { echo ' selected'; } ?>>Female</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="birthday" class="col-lg-4 control-label">Birthday</label>
+
+                        <div class="col-lg-8">
+                            <input class="small datepicker form-control" name="birthday" value="<?php echo $this->data->row('birthday'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_fname" class="col-lg-4 control-label">First name</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="b_fname" value="<?php echo $this->data->row('b_fname'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_lname" class="col-lg-4 control-label">Last name</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="b_lname" value="<?php echo $this->data->row('b_lname'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_addr1" class="col-lg-4 control-label">Address</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="b_addr1" value="<?php echo $this->data->row('b_addr1'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_addr2" class="col-lg-4 control-label">Address line 2</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="b_addr2" value="<?php echo $this->data->row('b_addr2'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_city" class="col-lg-4 control-label">City</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="b_city" value="<?php echo $this->data->row('b_city'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_state" class="col-lg-4 control-label">State</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="b_state" value="<?php echo $this->data->row('b_state'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_zip" class="col-lg-4 control-label">Zip</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="b_zip" value="<?php echo $this->data->row('b_zip'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="b_country" class="col-lg-4 control-label">Country</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="b_country" value="<?php echo $this->data->row('b_country'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phone" class="col-lg-4 control-label">Phone</label>
+
+                        <div class="col-lg-8">
+                            <input class="form-control" name="phone" value="<?php echo $this->data->row('phone'); ?>" size="30" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="comment" class="col-lg-4 control-label">Notes</label>
+
+                        <div class="col-lg-8">
+                            <textarea name="comment" class="notes-area form-control"><?php echo $this->data->row('comment'); ?></textarea>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div><!--.tab-content-->
+
+
+    </form>
+</div><!--#content.row-->
+
+<script>
+$('.trig_password').click(function(e){
+        e.preventDefault();
+        var target = $(this).attr('rel');
+        var html = '<input type="password" class="medium" name="'+target+'" value="">';
+        $(this).parent().html(html);
+});
+
+    <?php if($this->authenticator->row('authenticator_secret') == null){ ?>
+    $(document).ready(function(){
+        $('#authenticator').on('change', function(){
+            if($(this).val() == 1){
+                $(".form-group.authenticator").show();
+                $.post('/api/generate-auth-secret', {username: "<?php echo $this->data->row('username'); ?>"}, function(res){
+                    if(res.status.code == 200){
+                        $("#auth_secret").val(res.result.secret);
+                        $('#auth_qr_img').attr('src', res.result.qr);
+                    }
+                });
+            }
+        });
+    });
+    <?php }?>
+</script>

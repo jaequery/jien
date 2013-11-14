@@ -1,0 +1,7 @@
+<!--
+See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
+-->
+ 
+<?php if ($this->pageCount): ?>
+Showing <?php echo $this->firstItemNumber; ?> - <?php echo $this->lastItemNumber; ?> <em>out of <?php echo $this->totalItemCount; ?> total</em>
+<?php endif; ?>

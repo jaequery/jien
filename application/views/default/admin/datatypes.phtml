@@ -1,0 +1,45 @@
+<div id="title-bar" class="page-header">
+	<div class="col-lg-6">
+		<h1 class="page-title">Listing Datatype</h1>
+	</div>
+	<div id="header-btns">
+		<div class="inner">
+			<a href="/admin/datatype" class="btn btn-default"><span class="icon-plus"></span> Add New Datatype</a>
+		</div><!--.inner-->
+	</div><!--#header-btns.col-lg-4-->
+</div>
+
+<div class="row-fluid">
+	<div class="span12">
+
+		<div class="boot-datatable">
+
+			<table class="table table-bordered table-striped datatable">
+				<thead>
+					<tr>
+						<th width="10"><input type="checkbox" id="title-checkbox" name="title-checkbox" /></th>
+						<th class="header" rel="datatype.datatype_id">#</th>
+						<th class='header' rel='datatype.datatype'>Datatype</th><th class='header' rel='datatype.rank'>Rank</th>
+			            <th class="header" rel="datatype.created">Created</th>
+			            <th width="200"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<?php foreach($this->data->rows() AS $key=>$value){ ?>
+					<tr>
+						<td><input type="checkbox" /></td>
+						<td><?php echo $value[$this->primary]; ?></td>
+						<td><?php echo $value['datatype']; ?></td><td><?php echo $value['rank']; ?></td>
+						<td><?php echo date("m/d/y", strtotime($value['created'])); ?></td>
+						<td>
+							<a href="/admin/datatype/id/<?php echo $value[$this->primary]; ?>" class="btn btn-default"><span class="icon-eye-open"> View</span></a>
+							<a href="/admin/delete/?model=Datatype&id=<?php echo $value[$this->primary];; ?>" rel="model=Datatype|id=<?php echo $value[$this->primary]; ?>" class="btn btn-default trig_delete"><i class="icon-trash icon-white"></i> Delete</a>
+						</td>
+					</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+		</div>
+		<?php echo $this->pager($this->data->pager(), 'partials/pager/pager.phtml'); ?>
+	</div>
+</div>

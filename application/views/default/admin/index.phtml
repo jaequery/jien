@@ -1,0 +1,25 @@
+<div class="container">
+
+    <form class="form-signin" action="/auth/login" method="POST" id="login_form">
+        <div class="row">
+            <a class="navbar-brand col-lg-12" href="#">ProcCRM <small><span class="label label-warning">Beta</span></small></a>
+        </div>
+        <hr>
+        <input type="hidden" name="redir" value="/admin">
+        <h3 class="form-signin-heading">Please sign in</h3>
+        <input type="text" class="form-control" placeholder="Username" name="username" autofocus>
+        <input type="password" class="form-control" placeholder="Password" name="password">
+        <div class="login auth_code" style="padding-bottom: 10px; display: none;">
+            <hr>
+            <input type="text" class="form-control" placeholder="Two-Factor Login Code" name="auth_code">
+        </div>
+        <button class="btn btn-primary" type="submit">Sign in</button>
+    </form>
+
+</div><!-- .container -->
+
+<script>
+    $(document).ready(function(){
+        $('#login_form input[name=username]').focus();
+    });
+</script>

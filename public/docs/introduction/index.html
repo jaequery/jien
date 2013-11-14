@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6" lang="en"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7" lang="en"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->  <html class="no-js" lang="en"> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+
+	<title>Getting Started with Jien Framework</title>
+
+	<!-- Core and extension CSS files -->
+	<link rel="stylesheet" href="../core/deck.core.css">
+	<link rel="stylesheet" href="../extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="../extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="../extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="../extensions/status/deck.status.css">
+	<link rel="stylesheet" href="../extensions/hash/deck.hash.css">
+
+	<!-- Theme CSS files (menu swaps these out) -->
+	<link rel="stylesheet" id="style-theme-link" href="../themes/style/web-2.0.css">
+	<link rel="stylesheet" id="transition-theme-link" href="../themes/transition/horizontal-slide.css">
+
+	<!-- Custom CSS just for this page -->
+	<link rel="stylesheet" href="introduction.css">
+
+	<script src="../modernizr.custom.js"></script>
+</head>
+
+<body class="deck-container">
+
+<div class="theme-menu" style="width: 100%; text-align: center;">
+	Use your left and right arrow keys to navigate between slides
+	<!--<label for="style-themes">Style:</label>
+	<select id="style-themes">
+		<option selected value="../themes/style/web-2.0.css">Web 2.0</option>
+		<option value="../themes/style/swiss.css">Swiss</option>
+		<option value="../themes/style/neon.css">Neon</option>
+		<option value="">None</option>
+	</select>
+
+	<label for="transition-themes">Transition:</label>
+	<select id="transition-themes">
+		<option selected value="../themes/transition/horizontal-slide.css">Horizontal Slide</option>
+		<option value="../themes/transition/vertical-slide.css">Vertical Slide</option>
+		<option value="../themes/transition/fade.css">Fade</option>
+		<option value="">None</option>
+	</select>-->
+</div>
+
+<section class="slide" id="title">
+	<h1>Getting Started with Jien Framework</h1>
+</section>
+
+<section class="slide" id="install">
+	<h2>How to Install</h2>
+
+	<h3>First, grab the source code from github</h3>
+	<p><a href="http://github.com/jaequery" target="_blank">http://github.com/jaequery/jien</a></p>
+
+	<h4>Next ...</h4>
+	<ol>
+
+		<li class="slide" id="install-1">
+			<h3>Extract</h3>
+			<p>If your public folder is: /home/jaequery/domains/bla.com/public, the the code should be placed at /home/jaequery/domains/bla.com</p>
+		</li>
+		<li class="slide" id="install-2">
+			<h3>Confirm</h3>
+			<p>Once extracted, check that your folder contains these:</p>
+			<p>
+				<ul>
+					<li>/home/jaequery/domains/bla.com/application</li>
+					<li>/home/jaequery/domains/bla.com/library</li>
+					<li> ... and make sure your cache and sessions folder have write permissions</li>
+				</ul>
+			</p>
+		</li>
+		<li class="slide" id="install-3">
+			<h3>Configure</h3>
+			<p>Edit /home/jaequery/domains/bla.com/application/configs/application.ini</p>
+			<p>Modify accordingly to your needs: <p> ... db settings, disqus/twitter id, and memcache(optional)</p></p>
+		</li>
+		<li class="slide" id="install-4">
+			<h3>Populate the database</h3>
+			<p>Load the sql dump file which is located at:</p>
+			<p>... /home/jaequery/domains/bla.com/sql/jien.sql</p>
+		</li>
+
+	</ol>
+</section>
+
+<section class="slide" id="finished">
+	<h2>You are all setup</h2>
+	<p>Verify everything works by going to http://yoursite/admin</p>
+	<p>
+		user: admin<br>
+		pass: demo
+	</p>
+
+	<h2>Troubleshoot</h2>
+	<p>
+		If you still have issues, make sure you have properly enabled mod_rewrite ony your webserver.
+	</p>
+
+	<p>
+		If you still have issues, just shoot me an email: jaequery at gmail dot com
+	</p>
+</section>
+
+
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+</p>
+
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="number" name="slidenum" id="goto-slide">
+	<input type="submit" value="Go">
+</form>
+
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+
+  <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
+  <script src="//ajax.googleapis.com/ajax/libs/jquery/1.6.4/jquery.min.js"></script>
+  <script>window.jQuery || document.write('<script src="../jquery-1.6.4.min.js"><\/script>')</script>
+
+<!-- Deck Core and extensions -->
+<script src="../core/deck.core.js"></script>
+<script src="../extensions/menu/deck.menu.js"></script>
+<script src="../extensions/goto/deck.goto.js"></script>
+<script src="../extensions/status/deck.status.js"></script>
+<script src="../extensions/navigation/deck.navigation.js"></script>
+<script src="../extensions/hash/deck.hash.js"></script>
+
+<!-- Specific to this page -->
+<script src="introduction.js"></script>
+
+</body>
+</html>

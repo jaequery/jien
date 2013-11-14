@@ -1,0 +1,76 @@
+<?php
+	$type = $this->params('type') != '' ? $this->params('type') : ($this->data->row('type') ? $this->data->row('type') : 'Post');
+?>
+<div class="row" id="content">
+    
+    <div class="col-lg-12">
+        <form action="/admin/data" method="POST" class="trig_save form-horizontal">
+            <input type="hidden" name="model" value="<?php echo $this->model; ?>">
+            <input type="hidden" name="id" value="<?php echo $this->params('id'); ?>">
+            <div class="form-group">
+                <label for="type" class="col-lg-4 control-label">Type</label>
+                <div class="col-lg-8">
+                    <p><select class="select2" name="type" placeholder="Select type...">
+                        <?php // <option></option> ?>
+                        <?php
+                        $category_types_rows = Jien::model("Category")->select('type')->groupBy("type")->get()->rows();
+                        $category_types = array("");
+                        foreach($category_types_rows AS $row){
+                            $category_types[$row['type']] = $row['type'];
+                        }
+                        echo $this->dropdownOptions($category_types, $this->params('type', $this->data->row('type', 'Post')));
+                        ?>
+                        <option value="Add">-- Add new --</option>
+                    </select></p>
+                    <p><input type="text" id="type_new_box" class="form-control" placeholder="Enter new post type..."></p>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="parent_id" class="col-lg-4 control-label">Parent</label>
+                <div class="col-lg-8">
+                    <select name="parent_id" class="select2" placeholder="Select parent...">
+                        <?php echo $this->CategoryDropdown($type, $this->data->row('parent_id') ? $this->data->row('parent_id') : $this->params('category_id')); ?>
+                    </select>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="category" class="col-lg-4 control-label">Category name</label>
+                <div class="col-lg-8">
+                    <input type="text" name="category" class="form-control" value="<?php echo $this->data->row('category') ? $this->data->row('category') : ''; ?>">
+                </div>
+            </div>
+        </form>
+    </div><!--.col-lg-10-->
+</div><!--#content-->
+
+<script>
+
+$(document).ready(function(){
+
+	$('select[name=type]').change(function(){
+        
+		if($(this).val() == "Add"){
+
+			$('#type_new_box').show();
+			$('select[name=type]').attr('name', 'type_old');
+			$('#type_new').attr('name', 'type');
+
+		}else{
+
+			$('#type_new_box').hide();
+			$('select[name=type]').attr('name', 'type');
+			$('#type_new').attr('name', 'type_old');
+
+			$.getJSON("/api/categories", {type: $(this).val()}, function(res){
+				$('select[name=parent_id]').html(res.result.html);
+				console.log(res);
+			});
+		}
+	});
+    
+    $('.save-post').click(function(){
+        $('form.trig_save').submit();
+    });
+    
+});
+</script>

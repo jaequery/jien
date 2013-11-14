@@ -1,0 +1,11 @@
+<div>
+	<div class="page-header content" style="width: 90%;">
+	  <h1>Uh oh, you've encountered an error...</h1>
+	</div>
+</div>
+
+<div class="clear" style="clear: both;padding-bottom:20px;"></div>
+
+<?php if(APPLICATION_ENV != 'prod'){ ?>
+<p><?php echo $this->error; ?></p>
+<?php } ?>

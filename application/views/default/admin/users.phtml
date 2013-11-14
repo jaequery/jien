@@ -1,0 +1,75 @@
+<div class="row">
+    <div class="col-lg-12">
+        <div id="title-bar" class="page-header">
+            <div class="col-lg-6">
+                <h1 class="page-title">Listing Users</h1>
+            </div>
+            <div id="header-btns">
+                <div class="inner">
+                    <a href="/admin/user" class="btn btn-default"><span class="icon-plus"></span> New User</a>
+                </div><!--.inner-->
+            </div><!--#header-btns.col-lg-4-->
+        </div><!--#title-bar-->
+    </div><!--.col-lg-12-->
+</div><!--.row-->
+
+<div class="row" id="content">
+    <div class="col-lg-12">
+        <div class="clearfix"></div>
+        <table class="table table-bordered table-striped datatable with-check">
+            <thead>
+                <tr>
+                    <th rel="u.user_id">#</th>
+                    <th rel="u.username">Username</th>
+                    <th rel="u.email">Email</th>
+                    <th rel="u.created">Joined</th>
+                    <th class="col-actions">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($this->data->rows() AS $key=>$value){ ?>
+                <tr>
+                    
+                    <td ><?php echo $value['user_id']; ?></td>
+                    <td>
+                        <?php
+                            switch($value['provider']){
+                                case "facebook":
+                                    echo "<a href='http://facebook.com/{$value['username']}' target='_blank'><img src='/images/icons/facebook.png' width='15'></a>";
+                                break;
+
+                                case "twitter":
+                                    echo "<a href='http://twitter.com/{$value['username']}' target='_blank'><img src='/images/icons/twitter.png' width='15'></a>";
+                                break;
+
+                                default:
+                                break;
+                            }
+                        ?>
+                        <?php echo $value['username']; ?>
+                    </td>
+                    <td><?php echo $value['email']; ?></td>
+                    
+                    <td><?php echo date("Y-m-d", strtotime($value['created'])); ?></td>
+                    <td class="col-actions">
+                        <a href="/admin/<?php echo strtolower($this->model); ?>/id/<?php echo $value[$this->primary]; ?>" class="btn btn-primary btn-action"><span class="icon-eye-open"></span></a>
+                        <a href="/admin/delete/?model=<?php echo $this->model; ?>&id=<?php echo $value[$this->primary];; ?>" rel="model=<?php echo $this->model; ?>|id=<?php echo $value[$this->primary]; ?>" class="btn btn-danger btn-action trig_delete"><span class="icon-trash"></span></a>
+                    </td>
+                </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    </div>
+</div><!--#content.row-->
+
+
+<?php echo $this->partial('partials/datatable.phtml', array(
+    "model" => "User",
+    "fields" => array(
+        "user_id",
+        "username",
+        "email",
+        "created",
+    ),
+
+)); ?>

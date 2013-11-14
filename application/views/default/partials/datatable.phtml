@@ -1,0 +1,29 @@
+<?php
+$model = $this->model;
+$fields = implode($this->fields, '|');
+$joins = urlencode($this->joins);
+?>
+<script>
+ var listTable = $('.datatable').dataTable({
+     "aoColumnDefs": [
+         { "bSearchable": false, "bSortable": false, "aTargets": ['col-actions', 'col-checkbox', 'col-upload', 'col-ignore'] },
+         { "sClass": "col-actions", "aTargets": [-1] }
+     ],
+     //"sDom": 'T<"clear">lfrtip',
+     "sDom": '<"top"p><"bottom"lfrtFip>',
+     "oTableTools": {
+         "sSwfPath": "/themes/admin/swf/copy_csv_xls_pdf.swf",
+         "aButtons": [
+             {
+                 "sExtends": "xls",
+                 "sButtonText": '<span class="icon-share-alt"></span> Export'
+             }
+         ]
+     },
+     "bStateSave": true,
+     "bProcessing": true,
+     "bServerSide": true,
+     "sAjaxSource": '/admin/datatable/?model=<?php echo $model; ?>&fields=<?php echo $fields; ?>&joins=<?php echo $joins; ?>',
+     "aaSorting": [[ 0, "desc" ]]
+ });
+</script>

@@ -1,0 +1,53 @@
+<?php
+$params = ($_SERVER['REQUEST_URI']!=$this->baseUrl()) ? str_replace($this->baseUrl()."/","",$_SERVER['REQUEST_URI']) : $_SERVER['REQUEST_URI'] ; 
+$params = explode("?",$params);
+if (empty($params[1])) {
+	$get = ""; 
+}else{
+	$get = "?".$params[1];
+}
+?>
+<!--
+See http://developer.yahoo.com/ypatterns/pattern.php?pattern=searchpagination
+-->
+ 
+<?php if ($this->pageCount): ?>
+
+<ul class="pagination">
+
+	<!-- First page link -->
+    <?php if (isset($this->previous)): ?>
+		<!--<li><a href="<?php echo $this->url(array('page' => $this->first)); ?>">First</a></li>-->
+    <?php else: ?>
+    <?php endif; ?>
+
+    <!-- Previous page link -->
+	<?php if (isset($this->previous)): ?>
+	  <li><a href="<?php echo $this->url(array('page' => $this->previous)).$get; ?>">Prev </a></li>
+	<?php else: ?>
+	<?php endif; ?>
+	 
+	<!-- Numbered page links -->
+	<?php foreach ($this->pagesInRange as $page): ?>
+	  <?php if ($page != $this->current): ?>
+	    <li><a href="<?php echo $this->url(array('page' => $page)).$get; ?>"><?php echo $page; ?></a> </li>
+	  <?php else: ?>
+	  <li class="active"><a href="<?php echo $this->url(array('page' => $page)).$get; ?>"><?php echo $page; ?></a> </li>
+	  <?php endif; ?>
+	<?php endforeach; ?>
+	
+	<!-- Next page link -->
+	<?php if (isset($this->next)): ?>
+	  <li><a href="<?php echo $this->url(array('page' => $this->next)).$get; ?>"> Next</a></li>
+	<?php else: ?>
+	<?php endif; ?>
+	 
+	<!-- Last page link -->
+	<?php if (isset($this->next)): ?>
+	    <!--<li><a href="<?php echo $this->url(array('page' => $this->last)); ?>">Last</a></li>-->
+	<?php else: ?>
+	   
+	<?php endif; ?>
+
+</ul>
+<?php endif; ?>

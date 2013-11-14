@@ -1,0 +1,140 @@
+## Installation ##
+
+http://jien.jaequery.com/docs/introduction
+
+** Live Demo **
+
+Check out our live demo at:
+
+http://jien.jaequery.com/admin
+user: admin
+pass: demo
+
+** Jien Model **
+
+*** The query methods (where, limit, orderBy, groupBy, having) are all chainable so you can mix/match them.
+
+// get a single record by it's primary id
+$data = Jien::model("User")->get(16)->row();
+
+// get a single record with a where clause
+$data = Jien::model("User")->where("u.username LIKE '%jae%')->get()->row();
+
+// get all records
+$data = Jien::model("User")->get()->rows();
+
+// custom selects
+$data = Jien::model("User")->select("count(*) as count, u.username, u.user_id)->get()->rows();
+
+// get all records and limit to 20
+$data = Jien::model("User")->limit(20)->get()->rows();
+
+// get all records and limit to 20 and offset by 10
+$data = Jien::model("User")->limit(20, 10)->get()->rows();
+
+// sort by username desc
+$data = Jien::model("User")->limit(20)->orderBy('u.username desc')->get()->rows();
+
+// where clause for male only
+$data = Jien::model("User")->where("u.gender = 'm'")->orderBy('u.user_id asc')->get()->rows();
+
+// where clause for male or female
+$data = Jien::model("User")->where("u.gender = 'm' OR u.gender='f'")->get()->rows();
+
+// alternatively ...
+$data = Jien::model("User")->where("u.gender = 'm'")->orWhere("u.gender = 'f'")->orderBy('u.username asc')->get()->rows();
+
+// get all records and where clause for male only and add a or where clause
+$data = Jien::model("User")->where("u.gender = 'm'")->orWhere("u.gender = 'f'")->get()->rows();
+
+// get all records and where clause for male only and add a or where clause
+$data = Jien::model("User")->where("u.gender = 'm'")->orWhere("u.gender = 'f'")->get()->rows();
+
+// group by gender
+$data = Jien::model("User")->groupBy("u.gender")->get()->rows();
+
+// group by with having
+$posts = Jien::model("User")
+	->leftJoin("Post p", "p.user_id = u.user_id")
+	->where("p.user_id IS NOT NULL")
+	->groupBy("u.gender")
+	->having("u.active=1")
+	->get()->rows();
+
+
+// left join takes 2 params, 3rd optional (table and alias(optional), join condition, fields to select)
+$data = Jien::model("Post")
+	->select("p.subject, p.message")
+	->leftJoin("User u", "u.user_id = p.user_id", "u.username, u.user_id, p.created as post_created")
+	->get()->rows();
+Jien::debug($data);
+
+*** From the User model ***
+
+You can create pre-defined chunks of sql to re-use / interchange easily:
+
+public function byHuman(){
+	$this->andWhere("u.gender = 'f' OR u.gender = 'm'");
+	return $this;
+}
+
+...
+
+Now you can just:
+
+$data = Jien::model("User")->byHuman()->byPopular()->etc..etc..->get()->rows();
+
+...
+
+And pagination is simple too:
+
+[controller]
+$current_page = $this->_getParam('page', 1);
+$this->view->data = Jien::model("User")->withPager($current_page)->get();
+
+or to override defaults (defaults are item_per_page = 10, page_range = 10)
+
+$item_per_page = 10;
+$page_range = 10;
+$this->view->data = Jien::model("User")->withPager($current_page, $item_per_page, $page_range)->get();
+
+[index.phtml]
+<?php echo $this->pager($this->data->pager(), 'Sliding', 'partials/pager/pager.phtml'); ?>
+<?php Jien::debug($this->data->rows()); ?>
+
+
+*** Save ***
+
+$id = Jien::model("User")->save(array(
+	"username"	=>	"someguy123",
+));
+
+*** Update ***
+
+just pass it's primary value to the data:
+
+$affected = Jien::model("User")->save(array(
+	"user_id"	=>	23,
+	"username"	=>	"someguy123",
+));
+
+or pass a wheres clause...
+
+$affected = Jien::model("User")->save(array(
+	"username"	=>	'newname',
+), "gender = 'm'");
+
+*** Delete ***
+
+$affected = Jien::model("User")->delete($id);
+
+or
+
+$affected = Jien::model("User")->delete("gender = '' AND a != '2'");
+
+
+
+
+----------
+
+I let my request object be responsible for filtering out sql injection ...

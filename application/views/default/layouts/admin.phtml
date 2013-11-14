@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <title><?php if ($this->title!='') { echo $this->title; } ?></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/themes/admin/css/jquery-ui/jquery-ui-1.10.0.custom.css">
+    <link rel="stylesheet" href="/themes/admin/css/bootstrap.css">
+    <link rel="stylesheet" href="/themes/admin/css/bootstrap-glyphicons.css">
+    <link rel="stylesheet" href="/themes/admin/css/bootstrap-fontawesome.css">
+    <link rel="stylesheet" href="/themes/admin/css/datatables.css">
+    <link rel="stylesheet" href="/js/plugins/select2/select2.css">
+    <link rel="stylesheet" href="/themes/admin/css/TableTools.css">
+    <link rel="stylesheet" href="/themes/admin/css/jquery.timepicker.css">
+    <link rel="stylesheet" href="/themes/admin/css/admin.css">
+    <!-- jquery -->
+    <script src="/themes/admin/js/jquery.min.js"></script>
+    <script src="/themes/admin/js/jquery-ui-1.10.3.custom.min.js"></script>
+    <script src="/themes/admin/js/jquery.cookie.js"></script>
+    <script src="/themes/admin/js/sugar.min.js"></script>
+    <!-- various admin tools -->
+    <script src="/js/tinymce/tinymce.min.js"></script>
+    <script src="/js/plugins/select2/select2.js"></script>
+    <script src="/themes/admin/js/admin.php"></script><!-- need to explore -->
+    <script src="/themes/admin/js/bootstrap.js"></script>
+    <script src="/themes/admin/js/jquery.timepicker.min.js"></script>
+    <!-- begin data tables -->
+    <script src="/themes/admin/js/jquery.dataTables.js"></script>
+    <script src="/themes/admin/js/datatables-bootstrap.js"></script>
+    <script src="/themes/admin/js/datatables-filtering.js"></script>
+    <script src="/themes/admin/js/ZeroClipboard.js"></script>
+    <script src="/themes/admin/js/TableTools.js"></script>
+    <script src="/themes/admin/js/Chart.js"></script>
+    <script src="/themes/admin/js/jquery.bootstrap-growl.min.js"></script>
+    <!-- custom js -->
+    <script src="/js/jien.js"></script>
+    <script src="/themes/admin/js/main.js"></script>
+    </head>
+
+    <body>
+
+        <div id="wrap">
+            <nav id="menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
+                <div class="container">
+                    <a class="navbar-brand col-lg-2" href="/admin"><span class="glyphicon glyphicon-off"></span> Jien Framework</a>
+                    <ul class="nav navbar-nav">
+
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span class="icon-list"></span>
+                                Manage
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/admin/users">Users</a></li>
+                                <li><a href="/admin/roles">Roles</a></li>
+                                <?php
+                                $datatypes = Jien::model("Datatype")->orderBy("rank ASC")->get()->rows();
+                                foreach($datatypes AS $row){
+                                ?>
+                                <li><a href="/admin/<?php echo strtolower(Jien_Plural::pluralize($row['datatype'])); ?>"><?php echo Jien_Plural::pluralize($row['datatype']); ?></a></li>
+                                <?php } ?>
+                                <!-- scaffold menu -->
+                                <li class="divider"></li>
+                                <li><a href="/admin/scaffolder"><span class="icon-plus"></span> Add Datatype</a></li>
+                                <li><a href="/admin/datatypes"><span class="icon-wrench"></span> Manage Datatypes</a></li>
+                                <li><a href="/admin/categories"><span class="icon-wrench"></span> Manage Categories</a></li>
+                                
+                            </ul>
+                        </li>
+                    </ul>
+                    <ul class="nav navbar-nav pull-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <span class="icon-user"></span>
+                                <?php echo $_SESSION['user']['username']; ?>
+                                <span class="caret"></span>
+                            </a>
+                            <ul class="dropdown-menu">
+                                <li><a href="/admin/user/id/<?php echo $_SESSION['user']['user_id']; ?>"><span class="icon-cog"></span> My Settings</a></li>                                
+                                <li class="trig_logout"><a href=""><span class="icon-off"></span> Logout</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--.container-->
+            </nav><!--#menu.navbar-->
+
+            <div id="main" class="container">
+
+                <div class="row" id="content">
+                    <div class="col col-lg-12"><?php echo $this->layout()->content; ?></div>
+                </div><!-- main content end -->
+                
+
+            </div><!--#main-->
+
+        </div><!--#wrap-->
+
+        <div id="footer">
+            <div class="container">
+                <p class="text-muted credit"><small>&copy; 2013 BootPHP. All rights reserved.</small></p>
+            </div>
+        </div>
+
+    </body>
+    </html>
