@@ -29,7 +29,7 @@ class AdminController extends My_Controller {
         }
 
         // view vars
-        $this->title("Jien Framework");
+        $this->title(TITLE);
         $this->view->data = new Jien_Model_Factory(); // model output, contains row()/rows()/pager()
 
     }
@@ -88,12 +88,10 @@ class AdminController extends My_Controller {
     }
 
     public function dashboardAction(){
-        $this->view->title = 'Dashboard';
     }
 
     public function scaffolderAction(){
         if($this->params('model') != ''){
-            $this->view->title = 'Scaffolder';
             $model = $this->params('model');
             $scaffold = new Jien_Scaffold();
             $scaffold->generateFromTable($model);
@@ -111,8 +109,6 @@ class AdminController extends My_Controller {
             $this->json($res);
             exit;
         }
-        $this->view->title = 'Scaffolder';
-        $this->view->bodyclass = array('scaffolder');
     }
 
     public function usersAction(){
@@ -122,14 +118,12 @@ class AdminController extends My_Controller {
             exit;
         }
 
-        $this->view->title = 'Users';
         $this->view->model = "User";
         $this->view->primary = Jien::model($this->view->model)->getPrimary();
         $this->view->data = Jien::model($this->view->model)->orderBy("u.user_id DESC")->joinProvider()->joinRole()->withPager($this->params('page', 1))->filter($this->params())->get();
     }
 
     public function userAction(){
-        $this->view->title = 'View/Edit User';
         $this->view->model = "User";
         $this->view->roles = Jien::model('Role')->get();
         $id = $this->params('id');
@@ -142,8 +136,6 @@ class AdminController extends My_Controller {
     }
 
     public function categoriesAction(){
-        $this->view->title = 'Categories';
-        $this->view->bodyclass = array('categories');
         $this->view->model = "Category";
         $this->view->primary = Jien::model($this->view->model)->getPrimary();
         $this->view->data = Jien::model($this->view->model)
@@ -154,12 +146,6 @@ class AdminController extends My_Controller {
     }
 
     public function categoryAction(){
-        if($this->params('id')) {
-            $this->view->title = 'Update Category';
-        } else {
-            $this->view->title = 'Add Category';
-        }
-        $this->view->bodyclass = array('category');
         $this->view->model = "Category";
         $id = $this->params('id');
         if($id){
