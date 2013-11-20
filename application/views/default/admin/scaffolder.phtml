@@ -76,18 +76,6 @@
 
 <script>
 
-$('.trig_scaffold_model').click(function(e){
-    e.preventDefault();
-    var model = $("#scaffold_model").val();
-    if(model == ""){
-        alert("oops, you forgot to put in model name");
-    }else{
-        var c = confirm("This will overwrite any model-related files you may already have. Are you sure?");
-        if(c){
-            location.href = '/admin/scaffolder/?model='+model;
-        }
-    }
-});
 
 var row_count = 1;
 $('#add-row').click(function(e){
@@ -142,9 +130,18 @@ $('#tab-table').on('change', '.ct-default', function(e){
 
 $('#tab-table .btn.btn-primary').on('click', function(e){
     e.preventDefault();
+
     form_data = $('#tab-table form').serialize();
     $.post('/admin/scaffolder', form_data, function(res){
-        $('.tab-content').html(res);
+        if(res.status.code == 200){
+            jien.ui.growl('Saved');
+            setTimeout( function(){
+                window.location.reload();
+            }, '500')
+        }else{
+            jien.ui.growl('Error saving', 'error');
+        }
+
     })
 });
 

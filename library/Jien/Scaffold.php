@@ -49,9 +49,9 @@ class Jien_Scaffold {
 			$dest_fh = fopen($dest_path, 'w') or die("can't open file");
 			fwrite($dest_fh, $content);
 			fclose($dest_fh);
-			echo "<p>{$dest_path} created</p>";
+			//echo "<p>{$dest_path} created</p>";
 		}else{
-			echo "<p>{$dest_path} already exists</p>";
+			//echo "<p>{$dest_path} already exists</p>";
 		}
 		return true;
 	}
@@ -88,9 +88,9 @@ class Jien_Scaffold {
 			$dest_fh = fopen($dest_path, 'w') or die("can't open file");
 			fwrite($dest_fh, $content);
 			fclose($dest_fh);
-			echo "<p>{$dest_path} created</p>";
+			//echo "<p>{$dest_path} created</p>";
 		}else{
-			echo "<p>{$dest_path} already exists</p>";
+			//echo "<p>{$dest_path} already exists</p>";
 		}
 		return true;
 	}
@@ -104,9 +104,9 @@ class Jien_Scaffold {
 			$dest_fh = fopen($dest_path, 'w') or die("can't open file");
 			fwrite($dest_fh, $content);
 			fclose($dest_fh);
-			echo "<p>{$dest_path} created</p>";
+			//echo "<p>{$dest_path} created</p>";
 		}else{
-			echo "<p>{$dest_path} already exists</p>";
+			//echo "<p>{$dest_path} already exists</p>";
 		}
 		return true;
 	}
@@ -125,22 +125,20 @@ class Jien_Scaffold {
 
 			fwrite($dest_fh, $content);
 			fclose($dest_fh);
-			echo "<p>{$dest_path} actions appended</p>";
+			//echo "<p>{$dest_path} actions appended</p>";
 		}else{
-			echo "<p>AdminController already has {$model} actions</p>";
+			//echo "<p>AdminController already has {$model} actions</p>";
 		}
 
 		return true;
 	}
 
 	public function generateFromTable($model){
-		echo "<h3>Scaffolding from model: {$model}</h3>";
 		try {
 			$this->generateModel($model);
 			$this->appendAdminActions($model);
 			$this->generateAdminListView($model);
 			$this->generateAdminEditView($model);
-			echo "<p>ALL DONE</p>";
 
             $row = Jien::model("Datatype")->orderBy("rank DESC")->limit(1)->get()->row();
             Jien::model("Datatype")->save(array(
@@ -211,7 +209,7 @@ class Jien_Scaffold {
         $sql .= 'PRIMARY KEY(`' . strtolower($tbl_name) . '_id`)';
         $sql .= ")";
 
-        echo $sql;
+        //echo $sql;
 
         return $sql;
     }
