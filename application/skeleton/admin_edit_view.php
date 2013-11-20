@@ -1,7 +1,7 @@
 <form class="form-horizontal trig_form">
 	<input type="hidden" name="model" value="{model}">
 	<input type="hidden" name="id" value="<?php echo $this->params('id'); ?>">
-
+    <input type="submit" style="width:0px; height:0px; opacity:0;"/>
 	<div class="row">
 		<div class="col-lg-12">
 			<div id="title-bar" class="page-header">
