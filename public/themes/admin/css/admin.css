@@ -1001,3 +1001,5 @@ div.DTTT_container a {
 .clear-both { clear: both;}
 .boot-datatable-controls { margin-bottom: 10px; }
 .boot-datatable-controls .boot-datatable-control { float: left; margin-right: 10px;}
+
+.trig_form input[type=submit] { position: absolute; left: -99999px; top: -99999px; }
