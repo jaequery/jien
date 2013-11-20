@@ -141,13 +141,14 @@ class Jien_Scaffold {
 			$this->generateAdminEditView($model);
 
             $row = Jien::model("Datatype")->orderBy("rank DESC")->limit(1)->get()->row();
-            Jien::model("Datatype")->save(array(
+            $res = Jien::model("Datatype")->save(array(
                "datatype" => $model,
                "rank" => $row['rank'] + 1,
             ));
-
+            return $res;
 		}catch(Exception $e){
-			echo $e->getMessage();exit;
+            error_log($e->getMessage());
+            return $e->getMessage();
 		}
 	}
 

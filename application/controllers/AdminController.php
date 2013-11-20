@@ -75,6 +75,17 @@ class AdminController extends My_Controller {
                 $this->json($affected->row(), 200, 'returned');
                 break;
 
+                case "bulk":
+                    $ids = $this->params('ids');
+                    $type = $this->params('type');
+                    $affected = Jien::model($model)->bulk($type,$ids);
+
+                    if($affected){
+                        $this->json(array("affected"=>$affected), 200, 'bulk action successful');
+                    }else{
+                        $this->json(false, 400);
+                    }
+                break;
             }
         }catch(Exception $e){
             $this->json(array(), 405, $e->getMessage());
@@ -94,8 +105,12 @@ class AdminController extends My_Controller {
         if($this->params('model') != ''){
             $model = $this->params('model');
             $scaffold = new Jien_Scaffold();
-            $scaffold->generateFromTable($model);
-
+            $res = $scaffold->generateFromTable($model);
+            if($res){
+                $this->json($res, 200, 'created from table');
+            }else{
+                $this->json($res, 400, 'error creating from table');
+            }
             exit;
         }elseif($_SERVER['REQUEST_METHOD'] == 'POST'){
             $data = $this->params();
@@ -108,7 +123,6 @@ class AdminController extends My_Controller {
             }
             error_log($res);
             $this->json($res, 200, 'created');
-            echo "wtf";
             exit;
         }
     }
@@ -191,7 +205,38 @@ class AdminController extends My_Controller {
     	}
     }
 
+    public function vvvsAction(){
+    	$this->view->model = "Vvv";
+    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
+    	$this->view->data = Jien::model($this->view->model)->orderBy("vvv.vv_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
+    }
+
+    public function vvvAction(){
+    	$this->view->model = "Vvv";
+    	$id = $this->params('id');
+    	if($id){
+    		$this->view->data = Jien::model($this->view->model)->get($id);
+    	}
+    }
+
+    public function sitesAction(){
+    	$this->view->model = "Site";
+    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
+    	$this->view->data = Jien::model($this->view->model)->orderBy("site.site_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
+    }
+
+    public function siteAction(){
+    	$this->view->model = "Site";
+    	$id = $this->params('id');
+    	if($id){
+    		$this->view->data = Jien::model($this->view->model)->get($id);
+    	}
+    }
+
     // skeleton - dont remove this line, it's for scaffolding reason //
+
+
+
 
 
 

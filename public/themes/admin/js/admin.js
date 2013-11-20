@@ -1,7 +1,3 @@
-<?php
-session_start();
-header("content-type: application/javascript");
-?>
 /** admin vars **/
 var admin = {};
 admin.params = {};
@@ -226,7 +222,7 @@ $(document).ready(function(){
       }
       admin.filterRedir([{key: 'order_by', value: field},{key: 'sort_by', value: sort}], admin.params);
     });
-    
+
 
     // admin v2 //
 
@@ -241,7 +237,7 @@ $(document).ready(function(){
     // Sticky upper right buttons
     if ($(document).scrollTop() > 0 && !$('#header-btns').hasClass('fixed')) {
         $('#header-btns').hide().addClass('fixed').fadeIn('fast');
-    }    
+    }
     $(document).scroll(function(){
         if (!$('#header-btns .inner').is(':empty')) {
             if ($(document).scrollTop() > 0 && !$('#header-btns').hasClass('fixed')) {
@@ -252,7 +248,48 @@ $(document).ready(function(){
         }
     });
 
+    $('.trig_bulk_check').click( function(e){
+        var top = this;
+        $('.bulk_check').each( function(k,v){
+            $(v).prop('checked',top.checked);
+        })
+    })
+
+    $('.bulk_type').on('change', function(e){
+        var val = $(this).val();
+        if( val ){
+            $('.trig_bulk_submit button').prop('disabled', false)
+        }else{
+            $('.trig_bulk_submit button').prop('disabled', true)
+        }
 
 
+    })
+
+    $('.trig_bulk_submit').on('submit', function(e){
+        e.preventDefault();
+
+        var model = $('#model').val();
+        var type = $('.bulk_type').val();
+        var ids = [];
+        $('.bulk_check:checked').each( function(k,v){
+            ids.push($(v).data('id'));
+        })
+
+        if(ids.length>0){
+            c = confirm('Are you sure?');
+
+            if(c){
+                $.post('/admin/data',{ type: type, cmd: 'bulk', model: model, ids: ids }, function(res){
+                    if(res.status.code == 200){
+                        jien.ui.growl(res.status.message);
+                        setTimeout(function(res){
+                            window.location.reload();
+                        },500)
+                    }
+                })
+            }
+        }
+    })
 
 });

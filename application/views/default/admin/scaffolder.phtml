@@ -145,4 +145,26 @@ $('#tab-table .btn.btn-primary').on('click', function(e){
     })
 });
 
+$('.trig_scaffold_model').click(function(e){
+    e.preventDefault();
+    var model = $("#scaffold_model").val();
+    if(model == ""){
+        alert("oops, you forgot to put in model name");
+    }else{
+        var c = confirm("This will overwrite any model-related files you may already have. Are you sure?");
+        if(c){
+            $.get( '/admin/scaffolder/?model=' + model, function(res){
+                if(res.status.code == 200){
+                    jien.ui.growl(res.status.message);
+                    setTimeout( function(){
+                        window.location.reload();
+                    }, '500')
+                }else{
+                    jien.ui.growl(res.status.message,'error');
+                }
+            })
+        }
+    }
+});
+
 </script>
