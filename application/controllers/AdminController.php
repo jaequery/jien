@@ -192,7 +192,38 @@ class AdminController extends My_Controller {
     public function rolesAction(){
     	$this->view->model = "Role";
     	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("role.role_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
+    	$this->view->data = Jien::model($this->view->model)->orderBy("role.mptt_left ASC")->withPager($this->params('page', 1))->filter($this->params())->get();
+        $list = Jien::db()->query('SELECT node.role, (COUNT(parent.role) - 1) as depth
+                                                FROM Role as node
+                                                CROSS JOIN Role as parent
+                                                WHERE node.mptt_left BETWEEN parent.mptt_left AND parent.mptt_right
+                                                GROUP BY node.role
+                                                ORDER BY node.mptt_left')->fetchAll();
+
+        $this->view->list = '';
+        $currDepth = -1;  // -1 to get the outer <ul>
+        while (!empty($list)) {
+            $currNode = array_shift($list);
+            // Level down?
+            if ($currNode['depth'] > $currDepth) {
+                // Yes, open <ul>
+                $this->view->list .= '<ul>';
+            }
+            // Level up?
+            if ($currNode['depth'] < $currDepth) {
+                // Yes, close n open <ul>
+                $this->view->list .= str_repeat('</ul></li>', $currDepth - $currNode['depth']);
+            }
+            // Always add node
+            $this->view->list .= '<li><a href="#">' . $currNode['role'] . '</a>';
+            // Adjust current depth
+            $currDepth = $currNode['depth'];
+            // Are we finished?
+            if (empty($list)) {
+                // Yes, close n open <ul>
+                $this->view->list .= str_repeat('</ul>', $currDepth + 1);
+            }
+        }
     }
 
     public function roleAction(){

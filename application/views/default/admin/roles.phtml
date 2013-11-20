@@ -11,35 +11,45 @@
 
 <div class="row-fluid">
 	<div class="span12">
+        <?php if(!empty($this->list)){ ?>
+            <div class="row tree-container">
+                <div class="tree col-lg-4 col-lg-offset-4">
+                    <?php echo $this->list;?>
+                </div>
+            </div>
+        <?php }?>
 
-		<div class="boot-datatable">
-
-			<table class="table table-bordered table-striped datatable">
-				<thead>
-					<tr>
-						<th width="10"><input type="checkbox" id="title-checkbox" name="title-checkbox" /></th>
-						<th class="header" rel="role.role_id">#</th>
-						<th class='header' rel='role.role'>Role</th><th class='header' rel='role.parent_id'>Parent Id</th>
-			            <th class="header" rel="role.created">Created</th>
-			            <th width="200"></th>
-					</tr>
-				</thead>
-				<tbody>
-					<?php foreach($this->data->rows() AS $key=>$value){ ?>
-					<tr>
-						<td><input type="checkbox" /></td>
-						<td><?php echo $value[$this->primary]; ?></td>
-						<td><?php echo $value['role']; ?></td><td><?php echo $value['parent_id']; ?></td>
-						<td><?php echo date("m/d/y", strtotime($value['created'])); ?></td>
-						<td>
-							<a href="/admin/role/id/<?php echo $value[$this->primary]; ?>" class="btn btn-default"><span class="icon-eye-open"> View</span></a>
-							<a href="/admin/delete/?model=Role&id=<?php echo $value[$this->primary];; ?>" rel="model=Role|id=<?php echo $value[$this->primary]; ?>" class="btn btn-default trig_delete"><i class="icon-trash icon-white"></i> Delete</a>
-						</td>
-					</tr>
-					<?php } ?>
-				</tbody>
-			</table>
-		</div>
-		<?php echo $this->pager($this->data->pager(), 'partials/pager/pager.phtml'); ?>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="boot-datatable">
+                    <table class="table table-bordered table-striped datatable">
+                        <thead>
+                        <tr>
+                            <th width="10"><input type="checkbox" id="title-checkbox" name="title-checkbox" /></th>
+                            <th class="header" rel="role.role_id">#</th>
+                            <th class='header' rel='role.role'>Role</th><th class='header' rel='role.parent_id'>Parent Id</th>
+                            <th class="header" rel="role.created">Created</th>
+                            <th width="200"></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($this->data->rows() AS $key=>$value){ ?>
+                            <tr>
+                                <td><input type="checkbox" /></td>
+                                <td><?php echo $value[$this->primary]; ?></td>
+                                <td><?php echo $value['role']; ?></td><td><?php echo $value['parent_id']; ?></td>
+                                <td><?php echo date("m/d/y", strtotime($value['created'])); ?></td>
+                                <td>
+                                    <a href="/admin/role/id/<?php echo $value[$this->primary]; ?>" class="btn btn-default"><span class="icon-eye-open"> View</span></a>
+                                    <a href="/admin/delete/?model=Role&id=<?php echo $value[$this->primary];; ?>" rel="model=Role|id=<?php echo $value[$this->primary]; ?>" class="btn btn-default trig_delete"><i class="icon-trash icon-white"></i> Delete</a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                <?php echo $this->pager($this->data->pager(), 'partials/pager/pager.phtml'); ?>
+            </div>
+        </div>
 	</div>
 </div>
