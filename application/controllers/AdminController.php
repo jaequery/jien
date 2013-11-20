@@ -106,7 +106,9 @@ class AdminController extends My_Controller {
             if($res){
                 $scaffold->generateFromTable($data['tbl_name']);
             }
-            $this->json($res);
+            error_log($res);
+            $this->json($res, 200, 'created');
+            echo "wtf";
             exit;
         }
     }
@@ -189,8 +191,26 @@ class AdminController extends My_Controller {
     	}
     }
 
-
     // skeleton - dont remove this line, it's for scaffolding reason //
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
