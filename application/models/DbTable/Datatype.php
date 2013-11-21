@@ -14,8 +14,8 @@ class Application_Model_DbTable_Datatype extends My_Model
         // delete scaffolded files
         if($res){
             unlink(getcwd() . '/../application/models/DbTable/' . $datatype . '.php');
-            unlink(getcwd() . '/../application/views/default/admin/' . strtolower($datatype)).'.phtml';
-            unlink(getcwd() . '/../application/views/default/admin/' . strtolower(Jien_Plural::pluralize($datatype))).'.phtml';
+            unlink(getcwd() . '/../application/views/default/admin/' . strtolower($datatype).'.phtml');
+            unlink(getcwd() . '/../application/views/default/admin/' . strtolower(Jien_Plural::pluralize($datatype)) .'.phtml' );
         }
 
     }
