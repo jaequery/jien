@@ -10,6 +10,8 @@ class Application_Model_DbTable_Datatype extends My_Model
         $model = Jien::model("Datatype")->select('datatype')->where($where)->get()->row();
         $datatype = $model['datatype'];
         $res = parent::delete($where);
+
+        // delete scaffolded files
         if($res){
             unlink(getcwd() . '/../application/models/DbTable/' . $datatype . '.php');
             unlink(getcwd() . '/../application/views/default/admin/' . strtolower($datatype)).'.phtml';
