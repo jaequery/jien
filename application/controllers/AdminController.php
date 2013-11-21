@@ -234,7 +234,22 @@ class AdminController extends My_Controller {
     	}
     }
 
+    public function test3sAction(){
+    	$this->view->model = "Test3";
+    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
+    	$this->view->data = Jien::model($this->view->model)->orderBy("test3.test3_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
+    }
+
+    public function test3Action(){
+    	$this->view->model = "Test3";
+    	$id = $this->params('id');
+    	if($id){
+    		$this->view->data = Jien::model($this->view->model)->get($id);
+    	}
+    }
+
     // skeleton - dont remove this line, it's for scaffolding reason //
+
 
 
 
