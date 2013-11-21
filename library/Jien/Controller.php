@@ -139,7 +139,7 @@ class Jien_Controller extends Zend_Controller_Action {
     }
 
     public function me(){
-    	$identity = $this->auth->getIdentity();
+        $identity = $this->auth->getIdentity();
     	$res = array();
     	$res = $identity['properties'];
     	return $res;

@@ -17,7 +17,7 @@
 			<table class="table table-bordered table-striped datatable">
 				<thead>
 					<tr>
-						<th width="10"><input type="checkbox" id="title-checkbox" name="title-checkbox" /></th>
+						<th width="10"><input type="checkbox" class="trig_bulk_check" name="title-checkbox" /></th>
 						<th class="header" rel="{model|lower}.{model|col}_id">#</th>
 						{table_headers}
 			            <th class="header" rel="{model|lower}.created">Created</th>
@@ -27,7 +27,7 @@
 				<tbody>
 					<?php foreach($this->data->rows() AS $key=>$value){ ?>
 					<tr>
-						<td><input type="checkbox" /></td>
+						<td><input type="checkbox" data-id="<?php echo $value[$this->primary]; ?>" class="bulk_check"/></td>
 						<td><?php echo $value[$this->primary]; ?></td>
 						{table_rows}
 						<td><?php echo date("m/d/y", strtotime($value['created'])); ?></td>
@@ -40,6 +40,23 @@
 				</tbody>
 			</table>
 		</div>
-		<?php echo $this->pager($this->data->pager(), 'partials/pager/pager.phtml'); ?>
 	</div>
 </div>
+
+<div class="row">
+    <div class="col-md-4">
+        <form class="form-inline trig_bulk_submit">
+            <input type="hidden" id="model" value="Site">
+            <div class="form-group">
+                <select class="form-control bulk_type">
+                    <option value=""></option>
+                    <option value="delete">Delete</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <button class="form-control" disabled type="submit">Submit</button>
+            </div>
+        </form>
+    </div>
+</div>
+<?php echo $this->pager($this->data->pager(), 'partials/pager/pager.phtml'); ?>

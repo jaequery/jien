@@ -104,6 +104,22 @@ class Jien_Model extends Zend_Db_Table_Abstract {
         return $scheme;
     }
 
+    public function bulk($type, $ids){
+        $affected = 0;
+        switch($type){
+            case 'delete':
+                foreach($ids as $id){
+                    $res = $this->delete($id);
+                    if($res){
+                        $affected++;
+                    }
+                }
+            break;
+        }
+        return $affected;
+    }
+
+
     public function delete($where){
 
         if(is_numeric($where)){

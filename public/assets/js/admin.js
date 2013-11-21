@@ -43,6 +43,10 @@ var admin = {
                     $(this).parent().addClass('active');
                 }
             });
+        },
+
+        bulkDelete: function(){
+            alert('test');
         }
     }
 };
