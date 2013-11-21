@@ -11,6 +11,15 @@ class Application_Model_DbTable_Role extends My_Model
         $exists = Jien::model('Role')->Where("role = '{$data['childName']}'")->get()->rows();
 
         if(!$exists){
+            if($data['insertAs'] == 'rename'){
+                $update = array(
+                    'role_id' => $data['id'],
+                    'role' => $data['childName']
+                );
+                $id = parent::save($update);
+
+                return $id;
+            }
             if($data['insertAs'] == 'child'){
                 $below = Jien::model('Role')->Where('mptt_left > ' . $data['mptt_left'])->get()->rows();
                 $above = Jien::model('Role')->Where('mptt_left < ' . $data['mptt_left'])->andWhere('mptt_right > ' . $data['mptt_right'])->get()->rows();
