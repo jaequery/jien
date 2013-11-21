@@ -13,7 +13,7 @@
 	<div class="span12">
         <?php if(!empty($this->list)){ ?>
             <div class="row tree-container">
-                <div class="tree col-lg-4 col-lg-offset-4">
+                <div class="tree col-lg-12">
                     <?php echo $this->list;?>
                 </div>
             </div>
@@ -53,3 +53,14 @@
         </div>
 	</div>
 </div>
+<script>
+    $(document).ready(function(){
+        $('.tree li a').on('click', function(e){
+            e.preventDefault();
+                $.colorbox({
+                    width: "400px",
+                    href: "/admin/partials/file/role-action.phtml/name/"+$(this).data('name')+"/id/"+$(this).data('id')+"/left/"+$(this).data('left')+"/right/"+$(this).data('right')
+                })
+        });
+    });
+</script>

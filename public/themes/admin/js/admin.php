@@ -113,7 +113,7 @@ $(document).ready(function(){
   	});
 
   	// save form event
-    $('.trig_form').submit(function(e){
+    $(document).on('submit', '.trig_form', function(e){
         e.preventDefault();
         var form = $(this).attr('rel') || this;
         var data = jien.util.serializeForm(form);
@@ -126,6 +126,26 @@ $(document).ready(function(){
                 }
             }else{
               console.log(res);
+                jien.ui.growl(res.status.text, 'error');
+            }
+        });
+    });
+
+    $(document).on('submit', '.trig_role_form', function(e){
+        e.preventDefault();
+        var form = $(this).attr('rel') || this;
+        var data = jien.util.serializeForm(form);
+            $.post("/admin/data", data, function(res){
+                if(res.status.code == 200){
+                jien.ui.growl('Saved!');
+                if(!data.id){
+                    var page = data.model.pluralize().toLowerCase();
+                    window.location = '/admin/' + page;
+                }else{
+                    location.reload();
+                }
+            }else{
+                console.log(res);
                 jien.ui.growl(res.status.text, 'error');
             }
         });

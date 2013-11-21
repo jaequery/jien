@@ -193,7 +193,7 @@ class AdminController extends My_Controller {
     	$this->view->model = "Role";
     	$this->view->primary = Jien::model($this->view->model)->getPrimary();
     	$this->view->data = Jien::model($this->view->model)->orderBy("role.mptt_left ASC")->withPager($this->params('page', 1))->filter($this->params())->get();
-        $list = Jien::db()->query('SELECT node.role, (COUNT(parent.role) - 1) as depth
+        $list = Jien::db()->query('SELECT node.role_id, node.role, node.mptt_left, node.mptt_right, (COUNT(parent.role) - 1) as depth
                                                 FROM Role as node
                                                 CROSS JOIN Role as parent
                                                 WHERE node.mptt_left BETWEEN parent.mptt_left AND parent.mptt_right
@@ -215,7 +215,11 @@ class AdminController extends My_Controller {
                 $this->view->list .= str_repeat('</ul></li>', $currDepth - $currNode['depth']);
             }
             // Always add node
-            $this->view->list .= '<li><a href="#">' . $currNode['role'] . '</a>';
+            $this->view->list .= '<li><a href="#" data-name="'. $currNode['role'] . '"'
+                . ' data-id="' . $currNode['role_id'] . '"'
+                . ' data-left="'. $currNode['mptt_left'] . '"'
+                . ' data-right = "'. $currNode['mptt_right'] . '"'
+                . '>' . $currNode['role'] . '</a>';
             // Adjust current depth
             $currDepth = $currNode['depth'];
             // Are we finished?
@@ -232,6 +236,15 @@ class AdminController extends My_Controller {
     	if($id){
     		$this->view->data = Jien::model($this->view->model)->get($id);
     	}
+    }
+
+    public function partialsAction(){
+        $params = $this->params();
+        if(!empty($params['file'])){
+            $this->view->params = $params;
+            echo $this->view->render("admin/partials/{$params['file']}");
+            exit;
+        }
     }
 
 
