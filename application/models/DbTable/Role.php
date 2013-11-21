@@ -18,7 +18,7 @@ class Application_Model_DbTable_Role extends My_Model
                 unset($update['active']);
                 $update['mptt_left'] += 2;
                 $update['mptt_right'] += 2;
-                parent::save($update,$where);
+                parent::save($update);
             }
         }
         if(!empty($above)){
@@ -28,7 +28,7 @@ class Application_Model_DbTable_Role extends My_Model
                 unset($update['deleted']);
                 unset($update['active']);
                 $update['mptt_right'] += 2;
-                parent::save($update,$where);
+                parent::save($update);
             }
         }
 
@@ -44,6 +44,48 @@ class Application_Model_DbTable_Role extends My_Model
 
         $id = parent::save($parent,$where);
         $id = parent::save($child,$where);
+
+        return $id;
+    }
+
+    public function delete($data){
+        $delete = Jien::model('Role')
+            ->Where("mptt_left >= {$data['mptt_left']}")
+            ->andWhere("mptt_right <= {$data['mptt_right']}")
+            ->get()
+            ->rows();
+
+        foreach($delete as $item){
+            $id = parent::delete($item['role_id']);
+        }
+
+        $left = Jien::model('Role')
+            ->Where("mptt_left > {$data['mptt_left']}")
+            ->get()
+            ->rows();
+
+        foreach($left as $update){
+            unset($update['created']);
+            unset($update['updated']);
+            unset($update['deleted']);
+            unset($update['active']);
+            $update['mptt_left'] = $update['mptt_left'] - (($data['mptt_right'] - $data['mptt_left']) + 1 );
+            parent::save($update);
+        }
+
+        $right = Jien::model('Role')
+            ->Where("mptt_right > {$data['mptt_right']}")
+            ->get()
+            ->rows();
+
+        foreach($right as $update){
+            unset($update['created']);
+            unset($update['updated']);
+            unset($update['deleted']);
+            unset($update['active']);
+            $update['mptt_right'] = $update['mptt_right'] - (($data['mptt_right'] - $data['mptt_left']) + 1 );
+            parent::save($update);
+        }
 
         return $id;
     }

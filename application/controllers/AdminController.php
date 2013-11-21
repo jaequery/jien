@@ -69,6 +69,11 @@ class AdminController extends My_Controller {
                 $this->json(array("affected"=>$affected), 200, 'deleted');
                 break;
 
+                case "delete-role":
+                    $affected = Jien::model($model)->delete($data);
+                    $this->json(array("affected"=>$affected), 200, 'deleted');
+                    break;
+
                 case "get":
                 $id = $this->params('id');
                 $affected = Jien::model($model)->get($id);
@@ -219,7 +224,7 @@ class AdminController extends My_Controller {
                 . ' data-id="' . $currNode['role_id'] . '"'
                 . ' data-left="'. $currNode['mptt_left'] . '"'
                 . ' data-right = "'. $currNode['mptt_right'] . '"'
-                . '>' . $currNode['role'] . '</a>';
+                . '>' . "[{$currNode['mptt_left']}] " . $currNode['role'] . " [{$currNode['mptt_right']}]" . '</a>';
             // Adjust current depth
             $currDepth = $currNode['depth'];
             // Are we finished?

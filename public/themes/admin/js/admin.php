@@ -173,6 +173,27 @@ $(document).ready(function(){
   		}
   	});
 
+    $(document).on('click','.trig_role_delete',function(e){
+        e.preventDefault();
+            var c = confirm('Are you sure?');
+            if(c){
+            var form = $(this).attr('rel') || this;
+            var data = jien.util.serializeForm(form);
+            data.cmd = 'delete-role';
+            var self = this;
+            $.post("/admin/data", data, function(res){
+                if(res.status.code == 200){
+                    jien.ui.growl('Deleted');
+                    location.reload();
+                    //history.go(-1);
+                    //$(self).parent().parent().slideUp();
+                }else{
+                    jien.ui.growl(res.status.text, 'error');
+                }
+            });
+        }
+    });
+
   	// go back
   	$('.trig_back').click(function(e){
       e.preventDefault();

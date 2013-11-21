@@ -17,7 +17,16 @@
                 </form>
             </div>
             <div class="alert alert-danger">
-                Delete this Role and Child Roles <button type="button" class="btn btn-danger btn-sm">Delete</button>
+                <form class="form-inline trig_role_delete">
+                    <div class="form-group">Delete this Role and Child Roles</div>
+                    <div class="form-group">
+                        <input type="hidden" name="model" value="Role">
+                        <input type="hidden" name="id" value="<?php echo $params['id'];?>">
+                        <input type="hidden" name="mptt_left" value="<?php echo $params['left'];?>">
+                        <input type="hidden" name="mptt_right" value="<?php echo $params['right'];?>">
+                        <input type="button" class="btn btn-danger btn-sm" value="Delete">
+                    </div>
+                </form>
             </div>
         </div>
     </div>
