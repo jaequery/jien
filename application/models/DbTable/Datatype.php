@@ -5,11 +5,17 @@ class Application_Model_DbTable_Datatype extends My_Model
     protected $_name = 'Datatype';
     protected $_alias = 'datatype';
 
-    public function delete($where){
-        parent::delete($where);
-        
-        unlink(getcwd() . '/../application/models/DbTable/' . $this->_name . '.php');
-        unlink(getcwd() . '/../application/views/default/admin/' . strtolower($this->_name)).'.phtml';
-        unlink(getcwd() . '/../application/views/default/admin/' . strtolower(Jien_Plural::pluralize($this->_name))).'.phtml';
+    public function delete($where = ''){
+
+        $model = Jien::model("Datatype")->select('datatype')->where($where)->get()->row();
+        $datatype = $model['datatype'];
+        $res = parent::delete($where);
+        if($res){
+            unlink(getcwd() . '/../application/models/DbTable/' . $datatype . '.php');
+            unlink(getcwd() . '/../application/views/default/admin/' . strtolower($datatype)).'.phtml';
+            unlink(getcwd() . '/../application/views/default/admin/' . strtolower(Jien_Plural::pluralize($datatype))).'.phtml';
+        }
+
     }
+
 }

@@ -205,58 +205,6 @@ class AdminController extends My_Controller {
     	}
     }
 
-    public function vvvsAction(){
-    	$this->view->model = "Vvv";
-    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("vvv.vv_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
-    }
-
-    public function vvvAction(){
-    	$this->view->model = "Vvv";
-    	$id = $this->params('id');
-    	if($id){
-    		$this->view->data = Jien::model($this->view->model)->get($id);
-    	}
-    }
-
-    public function sitesAction(){
-    	$this->view->model = "Site";
-    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("site.site_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
-    }
-
-    public function siteAction(){
-    	$this->view->model = "Site";
-    	$id = $this->params('id');
-    	if($id){
-    		$this->view->data = Jien::model($this->view->model)->get($id);
-    	}
-    }
-
     // skeleton - dont remove this line, it's for scaffolding reason //
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 }
