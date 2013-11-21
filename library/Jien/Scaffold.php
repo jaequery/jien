@@ -155,22 +155,34 @@ class Jien_Scaffold {
     public function createTable($tbl_column_info){
         $tbl_name = $tbl_column_info['tbl_name'];
 
-        $check_table_q = "SHOW TABLES LIKE '$tbl_name'";
-        $check_table = Jien::db()->query($check_table_q)->rowCount();
-        if( $check_table > 0 ){
-            return false;
+        //ensure table name doesn't start with number and table name doesn't have special characters
+        if( $this->tableNameValidation($tbl_name) ){
+            $check_table_q = "SHOW TABLES LIKE '$tbl_name'";
+            $check_table = Jien::db()->query($check_table_q)->rowCount();
+            if( $check_table > 0 ){
+                return 'table exists';
+            }else{
+                $sql = $this->createTableSQL($tbl_column_info);
+
+                try{
+                    $res = Jien::db()->query($sql);
+                }catch(Exception $e){
+                    echo $e->getMessage();
+                    return $e->getMessage();
+                };
+
+                return true;
+            }
         }else{
-            $sql = $this->createTableSQL($tbl_column_info);
-
-            try{
-                $res = Jien::db()->query($sql);
-            }catch(Exception $e){
-                echo $e->getMessage();
-                return $e->getMessage();
-            };
-
-            return true;
+            return 'table name must start with a character';
         }
+    }
+
+    public function tableNameValidation($table_name){
+        //check if table name starts with a character from a-z
+        $number_start = '/^[a-zA-Z]/';
+
+        return preg_match($number_start,$table_name);
     }
 
     public function createTableSQL($tbl_column_info){

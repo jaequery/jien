@@ -118,11 +118,12 @@ class AdminController extends My_Controller {
             $data['tbl_name'] = ucfirst($data['tbl_name']);
             $scaffold = new Jien_Scaffold();
             $res = $scaffold->createTable($data);
-            if($res){
+            if($res === true){
                 $scaffold->generateFromTable($data['tbl_name']);
+                $this->json($res, 200, 'created');
+            }else{
+                $this->json($res, 400, 'error');
             }
-            error_log($res);
-            $this->json($res, 200, 'created');
             exit;
         }
     }
