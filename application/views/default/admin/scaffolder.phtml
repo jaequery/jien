@@ -139,7 +139,7 @@ $('#tab-table .btn.btn-primary').on('click', function(e){
                 window.location.reload();
             }, '500')
         }else{
-            jien.ui.growl('Error saving', 'error');
+            jien.ui.growl(res.result, 'error');
         }
 
     })
