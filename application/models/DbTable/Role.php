@@ -56,44 +56,49 @@ class Application_Model_DbTable_Role extends My_Model
     }
 
     public function delete($data){
-        $delete = Jien::model('Role')
-            ->Where("mptt_left >= {$data['mptt_left']}")
-            ->andWhere("mptt_right <= {$data['mptt_right']}")
-            ->get()
-            ->rows();
+        $res = Jien::model('Role')->Select('COUNT(*) as size')->get()->row();
+        if($res['size'] > 1 && $data['mptt_left'] != 1){
+            $delete = Jien::model('Role')
+                ->Where("mptt_left >= {$data['mptt_left']}")
+                ->andWhere("mptt_right <= {$data['mptt_right']}")
+                ->get()
+                ->rows();
 
-        foreach($delete as $item){
-            $id = parent::delete($item['role_id']);
+            foreach($delete as $item){
+                $id = parent::delete($item['role_id']);
+            }
+
+            $left = Jien::model('Role')
+                ->Where("mptt_left > {$data['mptt_left']}")
+                ->get()
+                ->rows();
+
+            foreach($left as $update){
+                unset($update['created']);
+                unset($update['updated']);
+                unset($update['deleted']);
+                unset($update['active']);
+                $update['mptt_left'] = $update['mptt_left'] - (($data['mptt_right'] - $data['mptt_left']) + 1 );
+                parent::save($update);
+            }
+
+            $right = Jien::model('Role')
+                ->Where("mptt_right > {$data['mptt_right']}")
+                ->get()
+                ->rows();
+
+            foreach($right as $update){
+                unset($update['created']);
+                unset($update['updated']);
+                unset($update['deleted']);
+                unset($update['active']);
+                $update['mptt_right'] = $update['mptt_right'] - (($data['mptt_right'] - $data['mptt_left']) + 1 );
+                parent::save($update);
+            }
+
+            return $id;
+        }else{
+            return false;
         }
-
-        $left = Jien::model('Role')
-            ->Where("mptt_left > {$data['mptt_left']}")
-            ->get()
-            ->rows();
-
-        foreach($left as $update){
-            unset($update['created']);
-            unset($update['updated']);
-            unset($update['deleted']);
-            unset($update['active']);
-            $update['mptt_left'] = $update['mptt_left'] - (($data['mptt_right'] - $data['mptt_left']) + 1 );
-            parent::save($update);
-        }
-
-        $right = Jien::model('Role')
-            ->Where("mptt_right > {$data['mptt_right']}")
-            ->get()
-            ->rows();
-
-        foreach($right as $update){
-            unset($update['created']);
-            unset($update['updated']);
-            unset($update['deleted']);
-            unset($update['active']);
-            $update['mptt_right'] = $update['mptt_right'] - (($data['mptt_right'] - $data['mptt_left']) + 1 );
-            parent::save($update);
-        }
-
-        return $id;
     }
 }

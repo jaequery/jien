@@ -12,7 +12,7 @@ class AdminController extends My_Controller {
             $this->setUser($user);
         }
 
-        if($this->hasRole("moderator")){
+        if($this->hasRole("admin")){
 
             // set it to remember me for 7 days
             if(empty($_COOKIE['remember'])){
@@ -81,7 +81,11 @@ class AdminController extends My_Controller {
 
                 case "delete-role":
                     $affected = Jien::model($model)->delete($data);
-                    $this->json(array("affected"=>$affected), 200, 'deleted');
+                    if($affected){
+                        $this->json(array("affected"=>$affected), 200, 'deleted');
+                    }else{
+                        $this->json(false, 400, 'error');
+                    }
                     break;
 
                 case "get":
