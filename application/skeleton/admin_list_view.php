@@ -46,7 +46,7 @@
 <div class="row">
     <div class="col-md-4">
         <form class="form-inline trig_bulk_submit">
-            <input type="hidden" id="model" value="Site">
+            <input type="hidden" id="model" value="{model}">
             <div class="form-group">
                 <select class="form-control bulk_type">
                     <option value=""></option>
