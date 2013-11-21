@@ -5,7 +5,6 @@
         <div class="panel-body">
             <div class="alert alert-info">
                 <form class="form-inline trig_role_form">
-                    <div class="form-group">Add Child: </div>
                     <div class="form-group">
                         <input type="hidden" name="model" value="Role">
                         <input type="hidden" name="id" value="<?php echo $params['id'];?>">
@@ -13,7 +12,15 @@
                         <input type="hidden" name="mptt_right" value="<?php echo $params['right'];?>">
                         <input type="text" class="form-control input-sm" name="childName" placeholder="Name">
                     </div>
-                    <input type="submit" class="btn btn-info btn-sm" value="Add">
+                    <div class="form-group">Action: </div>
+                    <div class="form-group">
+                        <select name="insertAs" class="form-control input-sm">
+                            <option value="child">add as child</option>
+                            <option value="parent">add as parent</option>
+                            <option value="rename">rename item</option>
+                        </select>
+                    </div>
+                    <input type="submit" class="btn btn-info btn-sm pull-right" value="Add">
                 </form>
             </div>
             <div class="alert alert-danger">
@@ -24,8 +31,8 @@
                         <input type="hidden" name="id" value="<?php echo $params['id'];?>">
                         <input type="hidden" name="mptt_left" value="<?php echo $params['left'];?>">
                         <input type="hidden" name="mptt_right" value="<?php echo $params['right'];?>">
-                        <input type="button" class="btn btn-danger btn-sm" value="Delete">
                     </div>
+                    <input type="button" class="btn btn-danger btn-sm pull-right" value="Delete">
                 </form>
             </div>
         </div>
