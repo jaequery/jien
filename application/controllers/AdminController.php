@@ -206,49 +206,13 @@ class AdminController extends My_Controller {
     	}
     }
 
-    public function testsAction(){
-    	$this->view->model = "Test";
-    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("test.test_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
-    }
+    
+    
+// skeleton - dont remove this line, it's for scaffolding reason //
 
-    public function testAction(){
-    	$this->view->model = "Test";
-    	$id = $this->params('id');
-    	if($id){
-    		$this->view->data = Jien::model($this->view->model)->get($id);
-    	}
-    }
 
-    public function test2sAction(){
-    	$this->view->model = "Test2";
-    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("test2.test2_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
-    }
 
-    public function test2Action(){
-    	$this->view->model = "Test2";
-    	$id = $this->params('id');
-    	if($id){
-    		$this->view->data = Jien::model($this->view->model)->get($id);
-    	}
-    }
 
-    public function test3sAction(){
-    	$this->view->model = "Test3";
-    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("test3.test3_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
-    }
-
-    public function test3Action(){
-    	$this->view->model = "Test3";
-    	$id = $this->params('id');
-    	if($id){
-    		$this->view->data = Jien::model($this->view->model)->get($id);
-    	}
-    }
-
-    // skeleton - dont remove this line, it's for scaffolding reason //
 
 
 

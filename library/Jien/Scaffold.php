@@ -133,6 +133,29 @@ class Jien_Scaffold {
 		return true;
 	}
 
+    public function removeAdminActions($model){
+        // append admin action
+        $admin_content = file_get_contents(APPLICATION_PATH . "/controllers/AdminController.php");
+
+        $scaffold_regex = "|(//scaffolder $model start)(.*)(//scaffolder $model end\n)|s";
+
+        if( preg_match($scaffold_regex, $admin_content) ){
+            $content = preg_replace($scaffold_regex, '', $admin_content);
+
+            $dest_path = APPLICATION_PATH . "/controllers/AdminController.php";
+            $dest_fh = fopen($dest_path, 'w') or die("can't open file");
+
+            fwrite($dest_fh, $content);
+            fclose($dest_fh);
+
+            $res = true;
+        }else{
+            $res = false;
+        }
+
+        return $res;
+    }
+
 	public function generateFromTable($model){
 		try {
 			$this->generateModel($model);
@@ -167,7 +190,7 @@ class Jien_Scaffold {
                 try{
                     $res = Jien::db()->query($sql);
                 }catch(Exception $e){
-                    echo $e->getMessage();
+                    //echo $e->getMessage();
                     return $e->getMessage();
                 };
 
@@ -225,5 +248,14 @@ class Jien_Scaffold {
         //echo $sql;
 
         return $sql;
+    }
+
+    public function delete($model){
+        $this->removeAdminActions($model);
+        Jien::db()->query("DROP Table $model");
+        Jien::cache()->clean(Zend_Cache::CLEANING_MODE_ALL);
+        unlink(getcwd() . '/../application/models/DbTable/' . $model . '.php');
+        unlink(getcwd() . '/../application/views/default/admin/' . strtolower($model).'.phtml');
+        unlink(getcwd() . '/../application/views/default/admin/' . strtolower(Jien_Plural::pluralize($model)) .'.phtml' );
     }
 }
