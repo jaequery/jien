@@ -36,16 +36,16 @@ class AdminController extends My_Controller {
 
     // when admin actions are called via ajax, it just returns json
     public function postDispatch() {
-        
+
         // if want only json, add to get/post request: output=json
         switch($this->params('output')){
             case "json":
                 if(!empty($this->view->data)){
                     $this->json($this->view->data->rows(), 200);
                 }
-            break;
+                break;
         }
-        
+
     }
 
     // all the save/delete requests goes through here and calls on the model's save/delete accordingly
@@ -58,22 +58,22 @@ class AdminController extends My_Controller {
         try {
             switch($cmd){
                 case "save":
-                $id = Jien::model($model)->save($data);
-                $primary = Jien::model($model)->getPrimary();
-                $this->json(array($primary=>$id), 200, 'saved');
-                break;
+                    $id = Jien::model($model)->save($data);
+                    $primary = Jien::model($model)->getPrimary();
+                    $this->json(array($primary=>$id), 200, 'saved');
+                    break;
 
                 case "delete":
-                $id = $this->params('id');
-                $affected = Jien::model($model)->delete($id);
-                $this->json(array("affected"=>$affected), 200, 'deleted');
-                break;
+                    $id = $this->params('id');
+                    $affected = Jien::model($model)->delete($id);
+                    $this->json(array("affected"=>$affected), 200, 'deleted');
+                    break;
 
                 case "get":
-                $id = $this->params('id');
-                $affected = Jien::model($model)->get($id);
-                $this->json($affected->row(), 200, 'returned');
-                break;
+                    $id = $this->params('id');
+                    $affected = Jien::model($model)->get($id);
+                    $this->json($affected->row(), 200, 'returned');
+                    break;
 
                 case "bulk":
                     $ids = $this->params('ids');
@@ -85,7 +85,7 @@ class AdminController extends My_Controller {
                     }else{
                         $this->json(false, 400);
                     }
-                break;
+                    break;
             }
         }catch(Exception $e){
             $this->json(array(), 405, $e->getMessage());
@@ -149,17 +149,17 @@ class AdminController extends My_Controller {
             $this->view->data = Jien::model($this->view->model)->get($id);
             $this->view->authenticator = Jien::Model('Authenticator')->Where('authenticator_user_id = ' . $id)->get();
         }
-        
+
     }
 
     public function categoriesAction(){
         $this->view->model = "Category";
         $this->view->primary = Jien::model($this->view->model)->getPrimary();
         $this->view->data = Jien::model($this->view->model)
-        ->orderBy("category.category_id DESC")
-        ->filter($this->params())
-        ->withPager($this->params('page', 1))
-        ->get();
+            ->orderBy("category.category_id DESC")
+            ->filter($this->params())
+            ->withPager($this->params('page', 1))
+            ->get();
     }
 
     public function categoryAction(){
@@ -171,7 +171,7 @@ class AdminController extends My_Controller {
     }
 
     public function datatableAction(){
-        $model = ucfirst($this->params('model'));        
+        $model = ucfirst($this->params('model'));
         $fields = $this->params('fields');
         $fields = explode("|", $fields);
         echo Jien::getDatatable($model, $fields);
@@ -179,35 +179,35 @@ class AdminController extends My_Controller {
     }
 
     public function datatypesAction(){
-    	$this->view->model = "Datatype";
-    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("datatype.datatype_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
+        $this->view->model = "Datatype";
+        $this->view->primary = Jien::model($this->view->model)->getPrimary();
+        $this->view->data = Jien::model($this->view->model)->orderBy("datatype.datatype_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
     }
 
     public function datatypeAction(){
-    	$this->view->model = "Datatype";
-    	$id = $this->params('id');
-    	if($id){
-    		$this->view->data = Jien::model($this->view->model)->get($id);
-    	}
+        $this->view->model = "Datatype";
+        $id = $this->params('id');
+        if($id){
+            $this->view->data = Jien::model($this->view->model)->get($id);
+        }
     }
 
     public function rolesAction(){
-    	$this->view->model = "Role";
-    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("role.role_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
+        $this->view->model = "Role";
+        $this->view->primary = Jien::model($this->view->model)->getPrimary();
+        $this->view->data = Jien::model($this->view->model)->orderBy("role.role_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
     }
 
     public function roleAction(){
-    	$this->view->model = "Role";
-    	$id = $this->params('id');
-    	if($id){
-    		$this->view->data = Jien::model($this->view->model)->get($id);
-    	}
+        $this->view->model = "Role";
+        $id = $this->params('id');
+        if($id){
+            $this->view->data = Jien::model($this->view->model)->get($id);
+        }
     }
 
-    
-    
+
+
 // skeleton - dont remove this line, it's for scaffolding reason //
 
 
