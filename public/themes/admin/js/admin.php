@@ -135,8 +135,9 @@ $(document).ready(function(){
         e.preventDefault();
         var form = $(this).attr('rel') || this;
         var data = jien.util.serializeForm(form);
-            $.post("/admin/data", data, function(res){
-                if(res.status.code == 200){
+        data.cmd = 'save-role';
+        $.post("/admin/data", data, function(res){
+            if(res.status.code == 200){
                 jien.ui.growl('Saved!');
                 if(!data.id){
                     var page = data.model.pluralize().toLowerCase();
@@ -144,6 +145,8 @@ $(document).ready(function(){
                 }else{
                     location.reload();
                 }
+            }else if(res.status.code == 400){
+                jien.ui.growl(res.status.message, 'error');
             }else{
                 console.log(res);
                 jien.ui.growl(res.status.text, 'error');

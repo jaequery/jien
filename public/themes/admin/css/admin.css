@@ -1084,7 +1084,7 @@ right connector from last child*/
     text-decoration: none;
     color: #666;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-size: 12px;
     display: inline-block;
 
     border-radius: 5px;
@@ -1107,4 +1107,12 @@ right connector from last child*/
 .tree li a:hover+ul::before,
 .tree li a:hover+ul ul::before{
     border-color:  #94a0b4;
+}
+
+.parent-node{
+    font-weight: 600;
+}
+
+.parent-node:hover{
+    background: #fabef8 !important;
 }

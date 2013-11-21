@@ -58,9 +58,12 @@
         $('.tree li a').on('click', function(e){
             e.preventDefault();
                 $.colorbox({
-                    width: "425px",
-                    href: "/admin/partials/file/role-action.phtml/name/"+$(this).data('name')+"/id/"+$(this).data('id')+"/left/"+$(this).data('left')+"/right/"+$(this).data('right')
+                    width: "360px",
+                    href: "/admin/partials/file/role-action.phtml/name/"+$(this).data('name')+"/id/"+$(this).data('id')+"/left/"+$(this).data('left')+"/right/"+$(this).data('right'),
+                    transition: "fade"
                 })
         });
+
+        $('.tree').find('ul').prev('a').addClass('parent-node');
     });
 </script>
