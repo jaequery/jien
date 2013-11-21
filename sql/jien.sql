@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.5.29, for osx10.7 (i386)
+-- MySQL dump 10.13  Distrib 5.5.33, for osx10.6 (i386)
 --
 -- Host: localhost    Database: jien
 -- ------------------------------------------------------
--- Server version	5.5.25
+-- Server version	5.5.33
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -176,12 +176,14 @@ CREATE TABLE `Role` (
   `role_id` int(11) NOT NULL AUTO_INCREMENT,
   `role` varchar(32) NOT NULL,
   `parent_id` tinyint(4) NOT NULL,
+  `mptt_left` int(11) DEFAULT NULL,
+  `mptt_right` int(11) DEFAULT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `updated` datetime NOT NULL,
   `deleted` datetime NOT NULL,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -190,7 +192,7 @@ CREATE TABLE `Role` (
 
 LOCK TABLES `Role` WRITE;
 /*!40000 ALTER TABLE `Role` DISABLE KEYS */;
-INSERT INTO `Role` VALUES (1,'guest',0,'2011-10-27 02:13:00','2013-09-27 15:05:25','0000-00-00 00:00:00',1),(2,'member',1,'2011-10-27 02:13:10','2011-11-06 20:20:16','0000-00-00 00:00:00',1),(3,'vip',2,'2011-10-27 02:13:41','2012-11-07 17:35:48','0000-00-00 00:00:00',1),(10,'moderator',3,'2011-10-27 02:13:47','2013-11-14 00:56:04','0000-00-00 00:00:00',1),(11,'admin',10,'2011-10-27 02:13:52','2011-11-06 20:20:35','0000-00-00 00:00:00',1);
+INSERT INTO `Role` VALUES (1,'guest',0,11,12,'2011-10-27 02:13:00','2013-09-27 15:05:25','0000-00-00 00:00:00',1),(2,'member',1,10,13,'2011-10-27 02:13:10','2011-11-06 20:20:16','0000-00-00 00:00:00',1),(3,'vip',2,9,14,'2011-10-27 02:13:41','2012-11-07 17:35:48','0000-00-00 00:00:00',1),(10,'moderator',3,8,15,'2011-10-27 02:13:47','2013-11-14 00:56:04','0000-00-00 00:00:00',1),(11,'admin',10,1,16,'2011-10-27 02:13:52','2011-11-06 20:20:35','0000-00-00 00:00:00',1),(12,'staff',0,2,7,'2013-11-20 16:33:48','0000-00-00 00:00:00','0000-00-00 00:00:00',1),(13,'underwriter',0,3,4,'2013-11-20 16:33:48','0000-00-00 00:00:00','0000-00-00 00:00:00',1),(14,'accounting',0,5,6,'2013-11-20 16:33:48','0000-00-00 00:00:00','0000-00-00 00:00:00',1);
 /*!40000 ALTER TABLE `Role` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -229,7 +231,7 @@ CREATE TABLE `User` (
   `active` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`user_id`),
   UNIQUE KEY `username` (`username`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -238,7 +240,7 @@ CREATE TABLE `User` (
 
 LOCK TABLES `User` WRITE;
 /*!40000 ALTER TABLE `User` DISABLE KEYS */;
-INSERT INTO `User` VALUES (5,1,0,11,'admin','$2a$08$LtbZ7x22f4uYzlBJz.2nBuIg2L5HiX0APDWPJZT0Tv1pkVvs6BYqS','male','admin@demo.com','1982-01-06','jien','framework','123 abc','#101','abc city','CA',90000,'United States','1231231234','Test','','2011-10-11 15:40:41','2013-11-14 13:08:37','0000-00-00 00:00:00','2013-11-12 17:05:58',1);
+INSERT INTO `User` VALUES (5,1,0,11,'admin','$2a$08$LtbZ7x22f4uYzlBJz.2nBuIg2L5HiX0APDWPJZT0Tv1pkVvs6BYqS','male','admin@demo.com','1982-01-06','jien','framework','123 abc','#101','abc city','CA',90000,'United States','1231231234','Test','','2011-10-11 15:40:41','2013-11-20 15:06:19','0000-00-00 00:00:00','2013-11-20 15:06:19',1);
 /*!40000 ALTER TABLE `User` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -251,4 +253,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-11-14 13:46:22
+-- Dump completed on 2013-11-20 17:13:02
