@@ -12,13 +12,13 @@ class Application_Model_DbTable_Datatype extends My_Model
         $res = parent::delete($where);
 
         // delete scaffolded files
+
         if($res){
-            Jien::db()->query("DROP Table $datatype");
-            unlink(getcwd() . '/../application/models/DbTable/' . $datatype . '.php');
-            unlink(getcwd() . '/../application/views/default/admin/' . strtolower($datatype).'.phtml');
-            unlink(getcwd() . '/../application/views/default/admin/' . strtolower(Jien_Plural::pluralize($datatype)) .'.phtml' );
+            $scaffold = new Jien_Scaffold();
+            $scaffold->delete($datatype);
         }
 
+        return $res;
     }
 
 }
