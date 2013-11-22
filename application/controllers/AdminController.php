@@ -271,15 +271,16 @@ class AdminController extends My_Controller {
         }
     }
 
+    public function modelSearchAction(){
+        $model = $this->params('model');
 
+        $model = Jien::model($model);
+        $this->view->model = $model;
+
+        echo $this->view->render("admin/partials/model-search.phtml");
+        exit;
+    }
 
 // skeleton - dont remove this line, it's for scaffolding reason //
-
-
-
-
-
-
-
 
 }

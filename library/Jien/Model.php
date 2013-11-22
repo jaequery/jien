@@ -419,9 +419,25 @@ class Jien_Model extends Zend_Db_Table_Abstract {
                         }
                     break;
 
+                    case "action": //ignore
+                        break;
+                    case "controller": //ignore
+                        break;
+                    case "module": //ignore
+                        break;
+                    //expect key operator val
+                    default:
+                        if( !empty($value['op'])  ){
+                            if( $value['val'] != '' ){
+                                $search = "$filter {$value['op']} '{$value['val']}'";
+                                $this->andWhere($search);
+                            }
+                        }
+                    break;
                 }
             }
         }
+
         return $this;
     }
 
@@ -484,6 +500,10 @@ class Jien_Model extends Zend_Db_Table_Abstract {
         }
 
         return $res;
+    }
+
+    public function getModelName(){
+        return $this->_name;
     }
 }
 ?>

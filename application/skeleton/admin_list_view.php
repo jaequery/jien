@@ -9,6 +9,12 @@
 	</div><!--#header-btns.col-lg-4-->
 </div>
 
+<div class="row">
+    <div class="col-sm-2">
+        <button data-model="{model}" class="trig_model_search">Search</button>
+    </div>
+</div>
+
 <div class="row-fluid">
 	<div class="span12">
 
