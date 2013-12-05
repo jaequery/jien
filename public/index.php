@@ -9,8 +9,9 @@ defined('APPLICATION_PATH')
 
 // define application environment
 if (PHP_SAPI == 'cli'){
-    if( file_exists('env') ){
-        $env = file_get_contents('env');
+    $env_file = APPLICATION_PATH . "/../public/env";
+    if( file_exists($env_file) ){
+        $env = file_get_contents($env_file);
         define('APPLICATION_ENV', $env);
     }else{
         define('APPLICATION_ENV', 'dev');
