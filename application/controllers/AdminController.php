@@ -32,6 +32,9 @@ class AdminController extends My_Controller {
         $this->title(TITLE);
         $this->view->data = new Jien_Model_Factory(); // model output, contains row()/rows()/pager()
 
+        // datatable
+        $this->per_page = $this->params('per_page', 10);
+
     }
 
     // when admin actions are called via ajax, it just returns json
@@ -156,7 +159,7 @@ class AdminController extends My_Controller {
 
         $this->view->model = "User";
         $this->view->primary = Jien::model($this->view->model)->getPrimary();
-        $this->view->data = Jien::model($this->view->model)->orderBy("u.user_id DESC")->joinProvider()->joinRole()->withPager($this->params('page', 1))->filter($this->params())->get();
+        $this->view->data = Jien::model($this->view->model)->orderBy("u.user_id DESC")->joinProvider()->joinRole()->withPager($this->params('page', 1))->filter($this->params(), $this->per_page)->get();
     }
 
     public function userAction(){
@@ -177,7 +180,7 @@ class AdminController extends My_Controller {
         $this->view->data = Jien::model($this->view->model)
             ->orderBy("category.category_id DESC")
             ->filter($this->params())
-            ->withPager($this->params('page', 1))
+            ->withPager($this->params('page', 1), $this->per_page)
             ->get();
     }
 
@@ -200,7 +203,7 @@ class AdminController extends My_Controller {
     public function datatypesAction(){
         $this->view->model = "Datatype";
         $this->view->primary = Jien::model($this->view->model)->getPrimary();
-        $this->view->data = Jien::model($this->view->model)->orderBy("datatype.datatype_id DESC")->withPager($this->params('page', 1))->filter($this->params())->get();
+        $this->view->data = Jien::model($this->view->model)->orderBy("datatype.datatype_id DESC")->withPager($this->params('page', 1), $this->per_page)->filter($this->params())->get();
     }
 
     public function datatypeAction(){
@@ -280,6 +283,7 @@ class AdminController extends My_Controller {
         echo $this->view->render("admin/partials/model-search.phtml");
         exit;
     }
+
 
 // skeleton - dont remove this line, it's for scaffolding reason //
 

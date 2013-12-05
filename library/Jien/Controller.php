@@ -16,10 +16,35 @@ class Jien_Controller extends Zend_Controller_Action {
 		}
 
 		// activate access control
-		$this->initAcl();
+		// $this->initAcl();
 
     }
 
+    public function hasRole($role, $action = ''){
+        //TODO: handle $action.
+        $permissionGroup = array();
+        if(!empty($this->user['role'])){
+            $user_role = $this->user['role'];
+        }else{
+            $user_role = 'guest';
+        }
+
+        $model = Jien::model('Role');
+        $userBoundary = $model->Where("role = '{$user_role}'")->get()->row();
+        foreach($model->Where("mptt_left >= {$userBoundary['mptt_left']}")->andWhere("mptt_right <= {$userBoundary['mptt_right']}")->get()->rows() as $row){
+            $permissionGroup[] = $row['role'];
+        }
+
+        if(in_array($role, $permissionGroup)){
+            return true;
+        }else{
+            return false;
+        }
+
+        return true;
+    }
+
+    /*
     public function initAcl(){
     	$acl = new Zend_Acl();
     	$roles = Jien::model("Role")->orderBy('role.role_id asc')->leftJoin("Role r2", "r2.role_id = role.parent_id", "r2.role as parent_role")->get()->rows();
@@ -64,6 +89,7 @@ class Jien_Controller extends Zend_Controller_Action {
 
 		return true;
     }
+    */
 
     public function setUser($user){
     	$user = (array) $user;
