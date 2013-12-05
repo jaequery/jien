@@ -274,32 +274,17 @@ class AdminController extends My_Controller {
         }
     }
 
+    public function modelSearchAction(){
+        $model = $this->params('model');
 
+        $model = Jien::model($model);
+        $this->view->model = $model;
 
-    
-    //scaffolder Wordpress start
-    public function wordpressesAction(){
-    	$this->view->model = "Wordpress";
-    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
-    	$this->view->data = Jien::model($this->view->model)->orderBy("wordpress.wordpress_id DESC")->withPager($this->params('page', 1), $this->per_page)->filter($this->params())->get();
+        echo $this->view->render("admin/partials/model-search.phtml");
+        exit;
     }
 
-    public function wordpressAction(){
-    	$this->view->model = "Wordpress";
-    	$id = $this->params('id');
-    	if($id){
-    		$this->view->data = Jien::model($this->view->model)->get($id);
-    	}
-    }
-    //scaffolder Wordpress end
 
 // skeleton - dont remove this line, it's for scaffolding reason //
-
-
-
-
-
-
-
 
 }

@@ -336,4 +336,13 @@ $(document).ready(function(){
         }
     })
 
+    $('.trig_model_search').on('click', function(e){
+        var model = $(this).data('model');
+        $.colorbox({
+            width: "680px",
+            href: "/admin/model-search/model/" + model,
+            transition: "fade"
+        })
+    })
+
 });
