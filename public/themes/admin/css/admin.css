@@ -1001,13 +1001,7 @@ div.DTTT_container a {
 .clear-both { clear: both;}
 .boot-datatable-controls { margin-bottom: 10px; }
 .boot-datatable-controls .boot-datatable-control { float: left; margin-right: 10px;}
-
-<<<<<<< HEAD
-.trig_form input[type=submit] { position: absolute; left: -99999px; top: -99999px; }
-=======
-
-
-
+.hidden-input[type=submit] { position: absolute; left: -99999px; top: -99999px; }
 
 /* role treeview */
 
@@ -1119,4 +1113,4 @@ right connector from last child*/
 .parent-node:hover{
     background: #fabef8 !important;
 }
->>>>>>> b9b0c06b85e9304adf7a1d7db00f171708a212a2
+

@@ -285,6 +285,23 @@ class AdminController extends My_Controller {
     }
 
 
+    
+    //scaffolder Post start
+    public function postsAction(){
+    	$this->view->model = "Post";
+    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
+    	$this->view->data = Jien::model($this->view->model)->orderBy("post.post_id DESC")->withPager($this->params('page', 1))->filter($this->params('filter'))->get();
+    }
+
+    public function postAction(){
+    	$this->view->model = "Post";
+    	$id = $this->params('id');
+    	if($id){
+    		$this->view->data = Jien::model($this->view->model)->get($id);
+    	}
+    }
+    //scaffolder Post end
+
 // skeleton - dont remove this line, it's for scaffolding reason //
 
 }
