@@ -1,8 +1,8 @@
 <?php
 
 class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
-        protected function _initRouter(){
-            if (PHP_SAPI == 'cli')
+    protected function _initRouter(){
+        if (PHP_SAPI == 'cli')
             {
                 $this->bootstrap ('frontcontroller');
                 $front = $this->getResource('frontcontroller');
@@ -36,98 +36,110 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
 		ini_set('log_errors', 1);
 		ini_set('error_log', getcwd() . '/../logs/error_log');
 
-	    $config = new Zend_Config($this->getOptions(), true);
-	    Zend_Registry::set('config', $config);
-	    Zend_Registry::set('params', array());
+        // if cache dir not set, create it
+        $cache_path = getcwd().'/../cache';
+        if (!file_exists($cache_path)) {
+            mkdir($cache_path, 0777, true);
+        }        
 
-	    // set all settings to global
-	    foreach($config->settings AS $name=>$value){
-	    	define(strtoupper($name), $value);
-	    }
+        // if .htaccess not set, copy it from back.htaccess
+        $htaccess_path = getcwd().'/.htaccess';
+        if (!file_exists($htaccess_path)) {
+            copy(getcwd().'/back.htaccess', $htaccess_path);
+        }        
 
-	    /** MEM CACHE **/
-		 // try to set caching via memcache
-		try {
-		    $frontendOptions = new Zend_Cache_Core(array(
-				'caching' => true,
-				'cache_id_prefix' => 'memcache',
-				'automatic_serialization' => true,
-			));
+        $config = new Zend_Config($this->getOptions(), true);
+        Zend_Registry::set('config', $config);
+        Zend_Registry::set('params', array());
 
-			$memcacheHosts = array();
-			$memcacheServers = array();
-			if(strstr(MEMCACHE_HOST,',')){
-				$memcacheHosts = explode(",", MEMCACHE_HOST);
-			}else{
-				$memcacheHosts[] = trim(MEMCACHE_HOST);
-			}
+        // set all settings to global
+        foreach($config->settings AS $name=>$value){
+            define(strtoupper($name), $value);
+        }
 
-			foreach($memcacheHosts AS $host){
-				$memcacheServers[] = array(
-					"host"	=>	$host,
-					"port"	=>	MEMCACHE_PORT,
-				);
-			}
-			$backendOptions  = new Zend_Cache_Backend_Memcached(array(
-				'servers' => $memcacheServers,
-				'compression' => true
-			));
-			$cache = Zend_Cache::factory( $frontendOptions, $backendOptions);
+        /** MEM CACHE **/
+        // try to set caching via memcache
+        try {
+            $frontendOptions = new Zend_Cache_Core(array(
+                'caching' => true,
+                'cache_id_prefix' => 'memcache',
+                'automatic_serialization' => true,
+            ));
 
-			// test memcache
-			$cache->save(1, 'initialized');
-			$memcache_test = $cache->load('initialized');
-			if(empty($memcache_test)){
-				$memcache_enabled = 0;
-			}else{
-				$memcache_enabled = 1;
-			}
-		}catch(Exception $e){
-			$memcache_enabled = 0;
-		}
+            $memcacheHosts = array();
+            $memcacheServers = array();
+            if(strstr(MEMCACHE_HOST,',')){
+                $memcacheHosts = explode(",", MEMCACHE_HOST);
+            }else{
+                $memcacheHosts[] = trim(MEMCACHE_HOST);
+            }
 
-		if($memcache_enabled == 0){
-			/** FILE CACHE **/
-	    	// set caching via files
-		    $frontendOptions = array(
-			    'automatic_serialization' => true,
-			    'lifetime'	=>	500,
-			);
-			$backendOptions  = array(
-			    'cache_dir' => APPLICATION_PATH . '/../cache'
-			);
-			$cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+            foreach($memcacheHosts AS $host){
+                $memcacheServers[] = array(
+                    "host"	=>	$host,
+                    "port"	=>	MEMCACHE_PORT,
+                );
+            }
+            $backendOptions  = new Zend_Cache_Backend_Memcached(array(
+                'servers' => $memcacheServers,
+                'compression' => true
+            ));
+            $cache = Zend_Cache::factory( $frontendOptions, $backendOptions);
 
-		}else{
+            // test memcache
+            $cache->save(1, 'initialized');
+            $memcache_test = $cache->load('initialized');
+            if(empty($memcache_test)){
+                $memcache_enabled = 0;
+            }else{
+                $memcache_enabled = 1;
+            }
+        }catch(Exception $e){
+            $memcache_enabled = 0;
+        }
 
-			// save session to memcache
-		    ini_set('session.save_handler', 'memcache');
-		    $memcachePaths = array();
-		    foreach($memcacheServers AS $server){
-		    	$memcachePaths[] = "tcp://{$server['host']}:{$server['port']}?persistent=1";
-		    }
-			ini_set('session.save_path', implode(", ", $memcachePaths));
+        if($memcache_enabled == 0){
+            /** FILE CACHE **/
+            // set caching via files
+            $frontendOptions = array(
+                'automatic_serialization' => true,
+                'lifetime'	=>	500,
+            );
+            $backendOptions  = array(
+                'cache_dir' => APPLICATION_PATH . '/../cache'
+            );
+            $cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
 
-		}
+        }else{
 
-	    // set cache to registry
-	    Zend_Registry::set('cache', $cache);
+            // save session to memcache
+            ini_set('session.save_handler', 'memcache');
+            $memcachePaths = array();
+            foreach($memcacheServers AS $server){
+                $memcachePaths[] = "tcp://{$server['host']}:{$server['port']}?persistent=1";
+            }
+            ini_set('session.save_path', implode(", ", $memcachePaths));
+
+        }
+
+        // set cache to registry
+        Zend_Registry::set('cache', $cache);
         Zend_Registry::set('timers', array());
 
-	    return $config;
-	}
+        return $config;
+    }
 
-	protected function _initSession(){
-		Zend_Session::start();
-	}
+    protected function _initSession(){
+        Zend_Session::start();
+    }
 
-	protected function _initController(){
+    protected function _initController(){
 
-	}
+    }
 
-	protected function _initDb(){
+    protected function _initDb(){
 
-		// gets our multi db instances
+        // gets our multi db instances
         $this->bootstrap('multidb');
         $dbr = $this->getResource('multidb');
 
@@ -137,20 +149,20 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
         // for time benchmarking
         Zend_Registry::set('timers', array());
 
-	}
+    }
 
-	protected function _initAttributeExOpenIDPath() {
+    protected function _initAttributeExOpenIDPath() {
         /*$autoLoader = Zend_Loader_Autoloader::getInstance();
 
-        $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
-            'basePath' => APPLICATION_PATH,
-            'namespace' => 'My_',
-        ));
+          $resourceLoader = new Zend_Loader_Autoloader_Resource(array(
+          'basePath' => APPLICATION_PATH,
+          'namespace' => 'My_',
+          ));
 
-        $resourceLoader->addResourceType('openidextension', 'openid/extension/', 'OpenId_Extension');
-        $resourceLoader->addResourceType('authAdapter', 'auth/adapter', 'Auth_Adapter');
+          $resourceLoader->addResourceType('openidextension', 'openid/extension/', 'OpenId_Extension');
+          $resourceLoader->addResourceType('authAdapter', 'auth/adapter', 'Auth_Adapter');
 
-        $autoLoader->pushAutoloader($resourceLoader);*/
+          $autoLoader->pushAutoloader($resourceLoader);*/
     }
 
 }
