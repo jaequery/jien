@@ -1,4 +1,5 @@
 <?php
+
 class Jien_View_Helper_Editable {
 
 	public $view;

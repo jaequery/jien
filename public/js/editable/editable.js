@@ -32,6 +32,7 @@ var editable = {
 
 $(document).ready(function(){
 	$.post("/auth/info", function(res){
+        console.log(res);
 		if(res.status.code == 200){
 			editable.show();
 			$(window).scroll(function(){
