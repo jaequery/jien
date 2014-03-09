@@ -284,8 +284,38 @@ class AdminController extends My_Controller {
         exit;
     }
 
+    //scaffolder Page start
+    public function pagesAction(){
+    	$this->view->model = "Page";
+    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
+    	$this->view->data = Jien::model($this->view->model)->orderBy("page.page_id DESC")->withPager($this->params('page', 1))->filter($this->params('filter'))->get();
+    }
 
-    
+    public function pageAction(){
+    	$this->view->model = "Page";
+    	$id = $this->params('id');
+    	if($id){
+    		$this->view->data = Jien::model($this->view->model)->get($id);
+    	}
+    }
+    //scaffolder Page end
+
+    //scaffolder Editable start
+    public function editablesAction(){
+    	$this->view->model = "Editable";
+    	$this->view->primary = Jien::model($this->view->model)->getPrimary();
+    	$this->view->data = Jien::model($this->view->model)->orderBy("editable.editable_id DESC")->withPager($this->params('page', 1))->filter($this->params('filter'))->get();
+    }
+
+    public function editableAction(){
+    	$this->view->model = "Editable";
+    	$id = $this->params('id');
+    	if($id){
+    		$this->view->data = Jien::model($this->view->model)->get($id);
+    	}
+    }
+    //scaffolder Editable end
+
 // skeleton - dont remove this line, it's for scaffolding reason //
 
 }

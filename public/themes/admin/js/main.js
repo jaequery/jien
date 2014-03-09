@@ -1,5 +1,11 @@
 $(document).ready(function(){
 
+    $('.wysiwyg').summernote({
+        onImageUpload: function(files, editor, welEditable) {
+            console.log('image upload:', files, editor, welEditable);
+        }
+    });
+
     // Bootstrap hashes for tabs
     var hash = window.location.hash;
     hash && $('ul.nav a[href="' + hash + '"]').tab('show');

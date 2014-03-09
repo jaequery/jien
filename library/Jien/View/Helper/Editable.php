@@ -8,7 +8,7 @@ class Jien_View_Helper_Editable {
         $this->view = $view;
     }
 
-	public function editable($name, $type = 'text', $default = ''){
+	public function editable($name, $default = ''){
 		$content = $default;
 		$data = Jien::model("Editable")->where("name = '{$name}'")->get()->row();
 		if(!empty($data)){

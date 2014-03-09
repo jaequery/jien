@@ -1,31 +1,37 @@
-<div Class="jumbotron">
-  <h1>super Awesome Marketing Speak!</h1>
-  <p Class="lead">cras Justo Odio, Dapibus Ac Facilisis In, Egestas Eget Quam. Fusce Dapibus, Tellus Ac Cursus Commodo, Tortor Mauris Condimentum Nibh, Ut Fermentum Massa Justo Sit Amet Risus.</p>
-  <a Class="btn Btn-large Btn-success" Href="#">sign Up Today</a>
+<div class="jumbotron">
+    <h1 class="editable" data-editable-type="text" data-editable="index_heading"><?php echo $this->editable('index_heading', 'Welcome to the Jien Framework'); ?></h1>
+
+    <p class="lead editable" data-editable-type="text" data-editable="index_subheading"><?php echo $this->editable('index_subheading', 'The wordpress killer we have been all waiting for ...'); ?></p>
+    <a class="btn Btn-large Btn-success editable" data-editable-type="text" data-editable="index_signup" Href="#"><?php echo $this->editable('index_signup', 'sign Up Today'); ?></a>
+
+    <br><br>
+    <div class="editable" data-editable-type="image" data-editable="index_img" Href="#"><img src="<?php echo $this->editable('index_img', '/images/icons/facebook.png'); ?>"></div>
+
 </div>
 
 <hr>
 
-<div Class="row-fluid Marketing">
-  <div Class="span6">
-    <h4>subheading</h4>
-    <p>donec Id Elit Non Mi Porta Gravida At Eget Metus. Maecenas Faucibus Mollis Interdum.</p>
+<div class="row-fluid Marketing editable" data-editable="index_content" data-editable-type="text">
+    <?php echo $this->editable('index_content', '
+    <div class="span6">
+        <h4>subheading</h4>
+        <p>donec Id Elit Non Mi Porta Gravida At Eget Metus. Maecenas Faucibus Mollis Interdum.</p>
 
-    <h4>subheading</h4>
-    <p>morbi Leo Risus, Porta Ac Consectetur Ac, Vestibulum At Eros. Cras Mattis Consectetur Purus Sit Amet Fermentum.</p>
+        <h4>subheading</h4>
+        <p>morbi Leo Risus, Porta Ac Consectetur Ac, Vestibulum At Eros. Cras Mattis Consectetur Purus Sit Amet Fermentum.</p>
 
-    <h4>subheading</h4>
-    <p>maecenas Sed Diam Eget Risus Varius Blandit Sit Amet Non Magna.</p>
-  </div>
+        <h4>subheading</h4>
+        <p>maecenas Sed Diam Eget Risus Varius Blandit Sit Amet Non Magna.</p>
+    </div>
 
-  <div Class="span6">
-    <h4>subheading</h4>
-    <p>donec Id Elit Non Mi Porta Gravida At Eget Metus. Maecenas Faucibus Mollis Interdum.</p>
+    <div class="span6">
+        <h4>subheading</h4>
+        <p>donec Id Elit Non Mi Porta Gravida At Eget Metus. Maecenas Faucibus Mollis Interdum.</p>
 
-    <h4>subheading</h4>
-    <p>morbi Leo Risus, Porta Ac Consectetur Ac, Vestibulum At Eros. Cras Mattis Consectetur Purus Sit Amet Fermentum.</p>
+        <h4>subheading</h4>
+        <p>morbi Leo Risus, Porta Ac Consectetur Ac, Vestibulum At Eros. Cras Mattis Consectetur Purus Sit Amet Fermentum.</p>
 
-    <h4>subheading</h4>
-    <p>maecenas Sed Diam Eget Risus Varius Blandit Sit Amet Non Magna.</p>
-  </div>
+        <h4>subheading</h4>
+        <p>maecenas Sed Diam Eget Risus Varius Blandit Sit Amet Non Magna.</p>
+    </div>'); ?>
 </div>

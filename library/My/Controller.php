@@ -2,6 +2,17 @@
 
 class My_Controller extends Jien_Controller {
 
+    public function preDispatch(){
+        // custom page
+        $controller = $this->params('controller');
+        $page = Jien::model("Page")->where("permalink = '/{$controller}'")->get()->row();
+        if(!empty($page)){
+            $this->view->content = $page['content'];
+            $this->title($page['title']);
+            $this->view('page');
+        }
+    }
+
     public function init(){
         parent::init();
 

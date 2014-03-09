@@ -1,0 +1,91 @@
+<form class="form-horizontal trig_form">
+    <input type="hidden" name="model" value="Page">
+    <input type="hidden" name="id" value="<?php echo $this->params('id'); ?>">
+    <input class="hidden-input" type="submit">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div id="title-bar" class="page-header">
+                <div class="col-lg-6">
+                    <h1 class="page-title">Edit Page</h1>
+                </div>
+                <div id="header-btns">
+                    <div class="inner">
+                        <button class="btn btn-default trig_go" rel="/admin/pages"><span class="icon-arrow-left"></span> View List</button>
+                        <button type="submit" class="btn btn-default trig_save"><span class="icon-save"></span> Save</button>
+                        <?php if($this->params('id') != ''){ ?>
+                            <button rel="model=<?php echo $this->model; ?>|id=<?php echo $this->params('id'); ?>" class="btn btn-default trig_delete"><span class="icon-trash"></span> Delete</button>
+                        <?php } ?>
+                    </div><!--.inner-->
+                </div><!--#header-btns.col-lg-4-->
+            </div><!--#title-bar-->
+        </div><!--.col-lg-12-->
+    </div><!--.row-->
+
+    <?php
+    /*
+    // enable when tab needed
+    <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-basic" data-toggle="tab">Basic Information</a></li>
+        <li><a href="#tab-advanced" data-toggle="tab">Advanced</a></li>
+    </ul>
+    */
+    ?>
+
+    <div class="tab-content">
+        <div class="tab-pane active" id="tab-basic">
+            <div class="row">
+                <div class="col-lg-12" style="border: 0px solid; text-align: left;">
+
+                    <!--
+                    <div class="form-group">
+                        <label for="name" class="col-lg-4 control-label">User Id</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="user_id" value="<?php echo $this->data->row("user_id"); ?>" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="col-lg-4 control-label">Parent Id</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="parent_id" value="<?php echo $this->data->row("parent_id"); ?>" type="text">
+                        </div>
+                    </div>
+                    -->
+
+                    <div class="form-group">
+                        <label for="name" class="col-lg-2 control-label">Title</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" placeholder="Enter title ..." name="title" value="<?php echo $this->data->row("title"); ?>" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="col-lg-2 control-label">Permalink</label>
+                        <div class="col-lg-2">
+                            <input class="form-control" placeholder="/about-us" name="permalink" value="<?php echo $this->data->row("permalink"); ?>" type="text">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name" class="col-lg-2 control-label">Content</label>
+                        <div class="col-lg-8">
+
+                            <textarea rows="20" class="wysiwyg form-control" name="content"><?php echo $this->data->row("content"); ?></textarea>
+                        </div>
+                    </div>
+
+                    <!--
+                    <div class="form-group">
+                        <label for="name" class="col-lg-2 control-label">Is Published</label>
+                        <div class="col-lg-8">
+                            <input class="form-control" name="is_published" value="<?php echo $this->data->row("is_published"); ?>" type="checkbox">
+                        </div>
+                    </div>
+                    -->
+
+                </div><!--.col.col-lg-6-->
+            </div><!--.row-->
+        </div><!--.tab-pane-->
+    </div><!--.tab-content-->
+</form>

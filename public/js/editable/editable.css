@@ -1,2 +1,8 @@
 .editable_menu { position: absolute; background: red; padding: 0px 5px; border-radius: 10px; margin: 0; cursor: pointer; color: white; font-size: 10px; font-family: arial; z-index: 999;}
 #editable_content { border: 1px solid; width: 99%; height: 300px; }
+.editable_active { border: 0px solid orange; }
+.hide { display: none; }
+
+#colorbox textarea { border: 0; width: 95%; }
+#colorbox textarea:focus { outline-color: transparent; outline-style: none; outline: none; }
+#colorbox input { }

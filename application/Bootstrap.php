@@ -33,9 +33,6 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap{
 
 	protected function _initConfig(){
 
-		ini_set('log_errors', 1);
-		ini_set('error_log', getcwd() . '/../logs/error_log');
-
         // if cache dir not set, create it
         $cache_path = getcwd().'/../cache';
         if (!file_exists($cache_path)) {

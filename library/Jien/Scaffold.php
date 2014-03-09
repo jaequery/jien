@@ -33,8 +33,8 @@ class Jien_Scaffold {
       		}
 
   			// table headers
-			$table_headers .= "<th class='header' rel='".strtolower($model).".{$value['COLUMN_NAME']}'>{$label}</th>";
-			$table_rows .= '<td><?php echo $value[\'' . $value['COLUMN_NAME'] . '\']; ?></td>';
+			$table_headers .= "<th class='header' rel='".strtolower($model).".{$value['COLUMN_NAME']}'>{$label}</th>\n";
+			$table_rows .= '<td><?php echo $value[\'' . $value['COLUMN_NAME'] . '\']; ?></td>' . "\n";
 
 		}
 
