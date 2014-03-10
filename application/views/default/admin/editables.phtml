@@ -39,7 +39,9 @@
 			<tr>
 			    <td><input type="checkbox" data-id="<?php echo $value[$this->primary]; ?>" class="bulk_check"/></td>
 			    <td><?php echo $value[$this->primary]; ?></td>
-						<td><?php echo $value['name']; ?></td>\n<td><?php echo $value['type']; ?></td>\n<td><?php echo $value['content']; ?></td>\n
+                <td><?php echo $value['name']; ?></td>
+                <td><?php echo $value['type']; ?></td>
+                <td><?php echo $value['content']; ?></td>
 			    <td><?php echo date("m/d/y", strtotime($value['created'])); ?></td>
 			    <td>
 				<a href="/admin/editable/id/<?php echo $value[$this->primary]; ?>" class="btn btn-default"><span class="icon-eye-open"> View</span></a>

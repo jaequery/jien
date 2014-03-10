@@ -10,11 +10,17 @@
     <!-- Le styles -->
     <link href="/css/bootstrap.css" rel="stylesheet">
     <link href="/css/bootstrap-responsive.css" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="http://yui.yahooapis.com/3.14.1/build/cssreset-context/cssreset-context-min.css">
+    <link rel="stylesheet" href="/themes/admin/css/bootstrap-fontawesome.css">
 
     <!-- bootphp theme -->
     <link href="/themes/bootphp/css/style.css" rel="stylesheet">
     <script src="/js/jquery.min.js"></script>
+    <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <script src="/themes/bootphp/js/site.js"></script>
+
+    <!-- wysiwyg -->
+    <link href="/js/plugins/summernote/dist/summernote.css" rel="stylesheet">
+    <script src="/js/plugins/summernote/dist/summernote.js"></script>
 
     <!-- jien files -->
     <script src="https://api.filepicker.io/v1/filepicker.js"></script>
@@ -42,7 +48,7 @@
             <?php } ?>
 
         </ul>
-        <h3 class="muted"><?php echo $this->title; ?></h3>
+        <h3 class="muted editable" data-editable="header_text"><?php echo $this->editable('header_text', $this->title); ?></h3>
     </div>
 
     <hr>
@@ -51,7 +57,7 @@
     <hr>
 
     <div class="footer">
-        <p>&copy; Company 2013</p>
+        <p class="editable" data-editable="footer_text"><?php echo $this->editable('footer_text', '&copy; Company 2014'); ?></p>
     </div>
 
 </div> <!-- /container -->

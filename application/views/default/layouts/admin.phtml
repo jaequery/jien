@@ -49,30 +49,37 @@
                 <div class="container">
                     <a class="navbar-brand col-lg-2" href="/admin"><span class="glyphicon glyphicon-off"></span> Jien Framework</a>
                     <ul class="nav navbar-nav">
-
+                        <li class="">
+                            <a class="" href="/admin/pages">
+                                <span class="glyphicon glyphicon-book"></span>
+                                Pages
+                            </a>
+                        </li>
+                        <li class="">
+                            <a class="" href="/admin/users">
+                                <span class="glyphicon glyphicon-user"></span>
+                                Users
+                            </a>
+                        </li>
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                                 <span class="icon-list"></span>
-                                Manage
+                                Other
                                 <span class="caret"></span>
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a href="/admin/users">Users</a></li>
-                                <li><a href="/admin/roles">Roles</a></li>
                                 <?php
                                 $datatypes = Jien::model("Datatype")->orderBy("rank ASC")->get()->rows();
                                 foreach($datatypes AS $row){
                                 ?>
                                 <li><a href="/admin/<?php echo strtolower(Jien_Plural::pluralize($row['datatype'])); ?>"><?php echo Jien_Plural::pluralize($row['datatype']); ?></a></li>
                                 <?php } ?>
-                                <!-- scaffold menu -->
-                                <li class="divider"></li>
-                                <li><a href="/admin/categories"><span class="icon-wrench"></span> Categories</a></li>
                                 <li class="divider"></li>
                                 <li><a href="/admin/datatypes"><span class="icon-star"></span> Scaffolder</a></li>
                                 
                             </ul>
                         </li>
+
                     </ul>
                     <ul class="nav navbar-nav pull-right">
                         <li class="dropdown">
